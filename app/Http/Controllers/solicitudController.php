@@ -24,6 +24,7 @@ class solicitudController extends Controller
         ->select('Nomb_M','SisM_M')
         ->distinct('Nomb_M','SisM_M') 
         ->where('Codigo_SIS_U','=',$codSIS)
+        ->where('asignado_UM','=',1)
         ->get();
         
         return $materias;
@@ -34,6 +35,7 @@ class solicitudController extends Controller
         ->select('Grupo_UM')
         ->where('usuario_Codigo_SIS_U','=',$codSIS)
         ->where('materia_SisM_M','=',$sisMateria)
+        ->where('asignado_UM','=',1)
         ->get();
 
         return $grupos;
@@ -45,6 +47,7 @@ class solicitudController extends Controller
         ->select('Grupo_UM','Nombre_U','Apelllido_Paterno_U','Apellido_Materno_U','Codigo_SIS_U')
         ->where('usuario_Codigo_SIS_U','<>',$codSIS)
         ->where('materia_SisM_M','=',$sisMateria)
+        ->where('asignado_UM','=',1)
         ->get();
 
         return $grupos;
