@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\UsuarioMaterium;
 
 class docenteController extends Controller
 {
@@ -17,9 +18,33 @@ class docenteController extends Controller
         return $docentes;
     }
 
-    public function desasignar($id,$materia,$grupo){
+    public function index(){
+        return UsuarioMaterium::all();
+    }
+
+    public function listarGruposMateria($sisMateria){
+        $grupos = \DB::table('usuario_materia')
+        ->select('Grupo_UM')
+        ->where('materia_SisM_M','=',$sisMateria)
+        ->get();
+
+        return $grupos;
+    }
+
+    public function asignar($codSIS,$sisMateria,$grupo){
+        $asignado = new UsuarioMaterium();
+
+        $asignado->Grupo_UM = $grupo;
+        $asignado->asignado_UM = 1;
+        $asignado->materia_SisM_M = $sisMateria;
+        $asignado->usuario_Codigo_SIS_U = $codSIS;
+
+        $asignado->save();
+    }
+
+    public function desasignar($codSIS,$sisMateria,$grupo){
         $afectado = \DB::table('usuario_materia')
-        ->where('usuario_Codigo_SIS_U','=',$id)
+        ->where('usuario_Codigo_SIS_U','=',$codSIS)
         ->where('materia_SisM_M','=',$materia)
         ->where('Grupo_UM','=',$grupo)
         ->update(['asignado_UM'=>0]);
