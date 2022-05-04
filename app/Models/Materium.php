@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $SisM_M
  * @property string $Nomb_M
  * 
+ * @property Collection|Grupo[] $grupos
  * @property Collection|SolicitudReserva[] $solicitud_reservas
  * @property UsuarioMaterium $usuario_materium
  *
@@ -34,6 +35,11 @@ class Materium extends Model
 	protected $fillable = [
 		'Nomb_M'
 	];
+
+	public function grupos()
+	{
+		return $this->hasMany(Grupo::class, 'materia_SisM_M');
+	}
 
 	public function solicitud_reservas()
 	{
