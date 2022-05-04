@@ -29,6 +29,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::get('/materias/{codSIS}',[solicitudController::class,'obtenerMateriasDocente']);
     Route::get('/grupos/{codSIS}/{sisMateria}',[solicitudController::class,'obtenerGrupos']);
     Route::get('/gruposCompartida/{codSIS}/{sisMateria}',[solicitudController::class,'obtenerGruposCompartidos']);
+    Route::get('/obtenerGruposDocentes/{codSIS}',[solicitudController::class,'obtenerGruposDocentes']);
 
     Route::post('/reservaIndividual',[solicitudController::class,'reservaIndividual']);
     Route::post('/reservaCompartida',[solicitudController::class,'reservaCompartida']);

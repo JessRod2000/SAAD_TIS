@@ -17,6 +17,17 @@ class solicitudController extends Controller
         return Materium::all();
     }
 
+    public function obtenerGruposDocentes($codSIS){
+        $grupos = \DB::table('usuario_materia')
+        ->join('materia','SisM_M','=','materia_SisM_M')
+        ->select('Grupo_UM','Nomb_M','SisM_M')
+        ->where('usuario_Codigo_SIS_U','=',$codSIS)
+        ->where('asignado_UM','=',1)
+        ->get();
+
+        return $grupos;
+    }
+
     public function obtenerMateriasDocente($codSIS){
         $materias = \DB::table('usuario_materia')
         ->join('users','usuario_Codigo_SIS_U','=','Codigo_SIS_U')
