@@ -41,13 +41,11 @@ class User extends Authenticatable
 	public $timestamps = false;
 
 	protected $casts = [
-		'id' => 'int',
 		'Codigo_SIS_U' => 'int',
 		'Rol_U' => 'int'
 	];
 
 	protected $fillable = [
-		'id',
 		'Codigo_SIS_U',
 		'Nombre_U',
 		'Contrasenia_U',

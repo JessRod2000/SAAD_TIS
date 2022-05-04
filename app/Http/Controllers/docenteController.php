@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\UsuarioMaterium;
+use App\Models\Grupo;
 
 class docenteController extends Controller
 {
@@ -22,10 +23,19 @@ class docenteController extends Controller
         return UsuarioMaterium::all();
     }
 
+    public function gruposMateria($sisMateria){
+        $grupos = \DB::table('grupo')
+        ->where('materia_SisM_M','=',$sisMateria)
+        ->get();
+
+        return $grupos;
+    }
+
     public function listarGruposMateria($sisMateria){
         $grupos = \DB::table('usuario_materia')
         ->select('Grupo_UM')
         ->where('materia_SisM_M','=',$sisMateria)
+        ->where('asignado_UM','=',1)
         ->get();
 
         return $grupos;

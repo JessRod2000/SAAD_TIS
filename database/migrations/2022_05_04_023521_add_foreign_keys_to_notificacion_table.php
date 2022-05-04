@@ -14,8 +14,8 @@ class AddForeignKeysToNotificacionTable extends Migration
     public function up()
     {
         Schema::table('notificacion', function (Blueprint $table) {
-            $table->foreign(['Id_RR_N'], 'fk_Notificacion_Reporte_Reserva1')->references(['Id_RR'])->on('reporte_reserva');
             $table->foreign(['usuario_Codigo_SIS_U'], 'fk_notificacion_usuario1')->references(['Codigo_SIS_U'])->on('users')->onUpdate('NO ACTION')->onDelete('NO ACTION');
+            $table->foreign(['Id_RR_N'], 'fk_Notificacion_Reporte_Reserva1')->references(['Id_RR'])->on('reporte_reserva');
         });
     }
 
@@ -27,8 +27,8 @@ class AddForeignKeysToNotificacionTable extends Migration
     public function down()
     {
         Schema::table('notificacion', function (Blueprint $table) {
-            $table->dropForeign('fk_Notificacion_Reporte_Reserva1');
             $table->dropForeign('fk_notificacion_usuario1');
+            $table->dropForeign('fk_Notificacion_Reporte_Reserva1');
         });
     }
 }

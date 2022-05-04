@@ -35,6 +35,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 //para borrar---------------------
     Route::get('/index',[docenteController::class,'index']);
 //--------------------------------
+    Route::get('/gruposMateria/{sisMateria}',[docenteController::class,'gruposMateria']);
     Route::get('/listarGruposMateria/{sisMateria}',[docenteController::class,'listarGruposMateria']);
     Route::put('/asignar/{codSIS}/{sisMateria}/{grupo}',[docenteController::class,'asignar']);
     Route::put('/desasignar/{codSIS}/{sisMateria}/{grupo}',[docenteController::class,'desasignar']);

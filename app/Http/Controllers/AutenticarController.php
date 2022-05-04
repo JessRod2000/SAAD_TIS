@@ -16,7 +16,6 @@ class AutenticarController extends Controller
     //
     public function registro(Registrorequest $request){
         $user = new User();
-        $user->id= $request->id;
         $user->Codigo_SIS_U= $request->Codigo_SIS_U;
         $user->Nombre_U= $request->Nombre_U;
         $user->Contrasenia_U= $request->Contrasenia_U;
