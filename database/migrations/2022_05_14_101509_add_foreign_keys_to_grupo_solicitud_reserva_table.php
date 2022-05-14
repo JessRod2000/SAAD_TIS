@@ -14,7 +14,7 @@ class AddForeignKeysToGrupoSolicitudReservaTable extends Migration
     public function up()
     {
         Schema::table('grupo_solicitud_reserva', function (Blueprint $table) {
-            $table->foreign(['solicitud_reserva_Id_SR', 'solicitud_reserva_materia_SisM_M'], 'fk_Grupo_solicitud_reserva')->references(['Id_SR', 'materia_SisM_M'])->on('solicitud_reserva')->onUpdate('NO ACTION')->onDelete('NO ACTION');
+            $table->foreign(['solicitud_reserva_Id_SR'], 'fk_grupo_solicitud_reserva_solicitud_reserva1')->references(['Id_SR'])->on('solicitud_reserva')->onUpdate('NO ACTION')->onDelete('NO ACTION');
         });
     }
 
@@ -26,7 +26,7 @@ class AddForeignKeysToGrupoSolicitudReservaTable extends Migration
     public function down()
     {
         Schema::table('grupo_solicitud_reserva', function (Blueprint $table) {
-            $table->dropForeign('fk_Grupo_solicitud_reserva');
+            $table->dropForeign('fk_grupo_solicitud_reserva_solicitud_reserva1');
         });
     }
 }

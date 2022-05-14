@@ -14,7 +14,7 @@ class AddForeignKeysToSolicitudReservaTable extends Migration
     public function up()
     {
         Schema::table('solicitud_reserva', function (Blueprint $table) {
-            $table->foreign(['materia_SisM_M'], 'fk_solicitud_reserva_materia1')->references(['SisM_M'])->on('materia')->onUpdate('NO ACTION')->onDelete('NO ACTION');
+            $table->foreign(['materia_Codigo_M'], 'fk_solicitud_reserva_materia1')->references(['Codigo_M'])->on('materia')->onUpdate('NO ACTION')->onDelete('NO ACTION');
         });
     }
 

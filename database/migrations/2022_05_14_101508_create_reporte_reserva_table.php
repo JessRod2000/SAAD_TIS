@@ -14,12 +14,12 @@ class CreateReporteReservaTable extends Migration
     public function up()
     {
         Schema::create('reporte_reserva', function (Blueprint $table) {
-            $table->integer('Id_RR')->primary();
-            $table->tinyInteger('Acep_RR');
-            $table->string('Obse_RR', 200)->nullable();
-            $table->date('FechAten_RR');
-            $table->time('HoraAten_RR');
-            $table->integer('Id_SR_RR')->index('fk_Reporte_Reserva_Solicitud_Reserva1_idx');
+            $table->integer('Id_RR', true);
+            $table->string('Estado_RR', 5);
+            $table->string('Observacion_RR', 500);
+            $table->date('Fecha_Reporte_RR');
+            $table->integer('solicitud_reserva_Id_SR')->index('fk_reporte_reserva_solicitud_reserva1_idx');
+            $table->integer('usuario_Codigo_SIS_U')->index('fk_reporte_reserva_usuario1_idx');
         });
     }
 

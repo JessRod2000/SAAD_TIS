@@ -14,11 +14,12 @@ class CreateHorarioLibreTable extends Migration
     public function up()
     {
         Schema::create('horario_libre', function (Blueprint $table) {
-            $table->integer('Id_HL')->primary();
-            $table->time('HoraInic_HL');
-            $table->time('HoraFina_HL');
-            $table->string('Dia_HL', 10);
-            $table->string('Codi_A_HL', 15)->index('fk_Horario_Libre_Aula1_idx');
+            $table->integer('Id_HL');
+            $table->time('Hora_Inicio_HL');
+            $table->string('Dia_HL', 15);
+            $table->string('aula_Id_A', 15)->index('fk_horario_libre_aula1_idx');
+
+            $table->primary(['Id_HL', 'aula_Id_A']);
         });
     }
 

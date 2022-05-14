@@ -19,8 +19,8 @@ class solicitudController extends Controller
 
     public function obtenerGruposDocentes($codSIS){
         $grupos = \DB::table('usuario_materia')
-        ->join('materia','SisM_M','=','materia_SisM_M')
-        ->select('Grupo_UM','Nomb_M','SisM_M')
+        ->join('materia','Codigo_M','=','materia_Codigo_M')
+        ->select('Grupo_UM','Nombre_M','Codigo_M')
         ->where('usuario_Codigo_SIS_U','=',$codSIS)
         ->where('asignado_UM','=',1)
         ->get();
@@ -31,9 +31,9 @@ class solicitudController extends Controller
     public function obtenerMateriasDocente($codSIS){
         $materias = \DB::table('usuario_materia')
         ->join('users','usuario_Codigo_SIS_U','=','Codigo_SIS_U')
-        ->join('materia','SisM_M','=','materia_SisM_M')
-        ->select('Nomb_M','SisM_M')
-        ->distinct('Nomb_M','SisM_M') 
+        ->join('materia','Codigo_M','=','materia_Codigo_M')
+        ->select('Nombre_M','Codigo_M')
+        ->distinct('Nombre_M','Codigo_M') 
         ->where('Codigo_SIS_U','=',$codSIS)
         ->where('asignado_UM','=',1)
         ->get();
@@ -45,7 +45,7 @@ class solicitudController extends Controller
         $grupos = \DB::table('usuario_materia')
         ->select('Grupo_UM')
         ->where('usuario_Codigo_SIS_U','=',$codSIS)
-        ->where('materia_SisM_M','=',$sisMateria)
+        ->where('materia_Codigo_M','=',$sisMateria)
         ->where('asignado_UM','=',1)
         ->get();
 
@@ -55,9 +55,9 @@ class solicitudController extends Controller
     public function obtenerGruposCompartidos($codSIS, $sisMateria){
         $grupos = \DB::table('usuario_materia')
         ->join('users','Codigo_SIS_U','=','usuario_Codigo_SIS_U')
-        ->select('Grupo_UM','Nombre_U','Apelllido_Paterno_U','Apellido_Materno_U','Codigo_SIS_U')
+        ->select('Grupo_UM','Nombre_U','Apellido_Paterno_U','Apellido_Materno_U','Codigo_SIS_U')
         ->where('usuario_Codigo_SIS_U','<>',$codSIS)
-        ->where('materia_SisM_M','=',$sisMateria)
+        ->where('materia_Codigo_M','=',$sisMateria)
         ->where('asignado_UM','=',1)
         ->get();
 
@@ -70,7 +70,7 @@ class solicitudController extends Controller
         
         $grupos = $request->grupos;
 
-        $reserva->materia_SisM_M=$request->materia_SisM_M;
+        $reserva->materia_Codigo_M=$request->materia_SisM_M;
         $reserva->Fecha_SR = $request-> Fecha_SR;
         $reserva->Hora_Inicio_SR = $request-> Hora_Inicio_SR;
         $reserva->Cantidad_Periodos_SR = $request-> Cantidad_Periodos_SR;
@@ -81,18 +81,18 @@ class solicitudController extends Controller
         $reserva->Creado_en_SR = now();
 
         $reserva->save();
-
-        $usuarioSolicitud->Id_SR_US = $reserva->id;
-        $usuarioSolicitud->usuario_Codigo_SIS_U = $request->usuario_Codigo_SIS_U;
+        return $reserva;
+        $usuarioSolicitud->solicitud_reserva_Id_SR = $reserva->Id_SR;
+        $usuarioSolicitud->usuarios_Codigo_SIS_U = $request->usuario_Codigo_SIS_U;
 
         $usuarioSolicitud->save();
 
         foreach($grupos as $gru){
             $grupo = new GrupoSolicitudReserva();
 
-            $grupo->id_G = $gru;
-            $grupo->solicitud_reserva_Id_SR = $reserva->id;
-            $grupo->solicitud_reserva_materia_SisM_M = $request->materia_SisM_M;
+            $grupo->Id_Grupo_GSR= $gru;
+            $grupo->solicitud_reserva_Id_SR = $reserva->Id_SR;
+            //$grupo->solicitud_reserva_materia_SisM_M = $request->materia_SisM_M;
 
             $response['grupo_solicitud_reserva']=$grupo;
 
@@ -112,7 +112,7 @@ class solicitudController extends Controller
         $docentes = $request->docentes;
         $grupos = $request->grupos;
 
-        $reserva->materia_SisM_M=$request->materia_SisM_M;
+        $reserva->materia_Codigo_M=$request->materia_SisM_M;
         $reserva->Fecha_SR = $request-> Fecha_SR;
         $reserva->Hora_Inicio_SR = $request-> Hora_Inicio_SR;
         $reserva->Cantidad_Periodos_SR = $request-> Cantidad_Periodos_SR;
@@ -128,9 +128,8 @@ class solicitudController extends Controller
 
             $usuarioSolicitud = new UsuarioSolicitud();
 
-            $usuarioSolicitud->Id_SR_US = $reserva->id;
-            $usuarioSolicitud->usuario_Codigo_SIS_U = $docen;
-
+            $usuarioSolicitud->solicitud_reserva_Id_SR = $reserva->Id_SR;
+            $usuarioSolicitud->usuarios_Codigo_SIS_U = $docen;
             $usuarioSolicitud->save();
         }
 
@@ -138,9 +137,9 @@ class solicitudController extends Controller
 
             $grupo = new GrupoSolicitudReserva();
 
-            $grupo->id_G = $gru;
-            $grupo->solicitud_reserva_Id_SR = $reserva->id;
-            $grupo->solicitud_reserva_materia_SisM_M = $request->materia_SisM_M;
+            $grupo->Id_Grupo_GSR = $gru;
+            $grupo->solicitud_reserva_Id_SR = $reserva->Id_SR;
+            //$grupo->solicitud_reserva_materia_Codigo_M = $request->materia_Codigo_M;
 
             $grupo->save();
         }

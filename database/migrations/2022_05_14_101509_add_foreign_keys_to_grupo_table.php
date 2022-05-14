@@ -14,7 +14,7 @@ class AddForeignKeysToGrupoTable extends Migration
     public function up()
     {
         Schema::table('grupo', function (Blueprint $table) {
-            $table->foreign(['materia_SisM_M'], 'fk_grupo_materia1')->references(['SisM_M'])->on('materia')->onUpdate('NO ACTION')->onDelete('NO ACTION');
+            $table->foreign(['materia_Codigo_M'], 'fk_grupo_materia1')->references(['Codigo_M'])->on('materia')->onUpdate('NO ACTION')->onDelete('NO ACTION');
         });
     }
 

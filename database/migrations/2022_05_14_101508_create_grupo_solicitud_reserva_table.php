@@ -14,12 +14,10 @@ class CreateGrupoSolicitudReservaTable extends Migration
     public function up()
     {
         Schema::create('grupo_solicitud_reserva', function (Blueprint $table) {
-            $table->string('id_G', 5);
-            $table->integer('solicitud_reserva_Id_SR');
-            $table->integer('solicitud_reserva_materia_SisM_M');
+            $table->string('Id_Grupo_GSR', 5);
+            $table->integer('solicitud_reserva_Id_SR')->index('fk_grupo_solicitud_reserva_solicitud_reserva1_idx');
 
-            $table->index(['solicitud_reserva_Id_SR', 'solicitud_reserva_materia_SisM_M'], 'fk_Grupo_solicitud_reserva_idx');
-            $table->primary(['id_G', 'solicitud_reserva_Id_SR', 'solicitud_reserva_materia_SisM_M']);
+            $table->primary(['Id_Grupo_GSR', 'solicitud_reserva_Id_SR']);
         });
     }
 
