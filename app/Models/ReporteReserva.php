@@ -14,16 +14,15 @@ use Illuminate\Database\Eloquent\Model;
  * Class ReporteReserva
  * 
  * @property int $Id_RR
- * @property int $Acep_RR
- * @property string|null $Obse_RR
- * @property Carbon $FechAten_RR
- * @property Carbon $HoraAten_RR
- * @property int $Id_SR_RR
+ * @property string $Estado_RR
+ * @property string $Observacion_RR
+ * @property Carbon $Fecha_Reporte_RR
+ * @property int $solicitud_reserva_Id_SR
+ * @property int $usuario_Codigo_SIS_U
  * 
  * @property SolicitudReserva $solicitud_reserva
- * @property Collection|Notificacion[] $notificacions
- * @property Collection|ReporteAula[] $reporte_aulas
- * @property Collection|UsuarioReporte[] $usuario_reportes
+ * @property User $user
+ * @property Collection|Aula[] $aulas
  *
  * @package App\Models
  */
@@ -31,45 +30,38 @@ class ReporteReserva extends Model
 {
 	protected $table = 'reporte_reserva';
 	protected $primaryKey = 'Id_RR';
-	public $incrementing = false;
 	public $timestamps = false;
 
 	protected $casts = [
-		'Id_RR' => 'int',
-		'Acep_RR' => 'int',
-		'Id_SR_RR' => 'int'
+		'solicitud_reserva_Id_SR' => 'int',
+		'usuario_Codigo_SIS_U' => 'int'
 	];
 
 	protected $dates = [
-		'FechAten_RR',
-		'HoraAten_RR'
+		'Fecha_Reporte_RR'
 	];
 
 	protected $fillable = [
-		'Acep_RR',
-		'Obse_RR',
-		'FechAten_RR',
-		'HoraAten_RR',
-		'Id_SR_RR'
+		'Estado_RR',
+		'Observacion_RR',
+		'Fecha_Reporte_RR',
+		'solicitud_reserva_Id_SR',
+		'usuario_Codigo_SIS_U'
 	];
 
 	public function solicitud_reserva()
 	{
-		return $this->belongsTo(SolicitudReserva::class, 'Id_SR_RR');
+		return $this->belongsTo(SolicitudReserva::class, 'solicitud_reserva_Id_SR');
 	}
 
-	public function notificacions()
+	public function user()
 	{
-		return $this->hasMany(Notificacion::class, 'Id_RR_N');
+		return $this->belongsTo(User::class, 'usuario_Codigo_SIS_U');
 	}
 
-	public function reporte_aulas()
+	public function aulas()
 	{
-		return $this->hasMany(ReporteAula::class, 'Id_RR_RA');
-	}
-
-	public function usuario_reportes()
-	{
-		return $this->hasMany(UsuarioReporte::class, 'Id_RR_UR');
+		return $this->belongsToMany(Aula::class, 'reporte_reserva_aula', 'reporte_reserva_Id_RR', 'aula_Id_A')
+					->withPivot('Fecha_Reserva_Ocupado_RRA', 'Horario_Ocupado_RRA');
 	}
 }

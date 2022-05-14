@@ -14,7 +14,7 @@ class AddForeignKeysToHorarioLibreTable extends Migration
     public function up()
     {
         Schema::table('horario_libre', function (Blueprint $table) {
-            $table->foreign(['Codi_A_HL'], 'fk_Horario_Libre_Aula1')->references(['Codi_A'])->on('aula');
+            $table->foreign(['aula_Id_A'], 'fk_horario_libre_aula1')->references(['Id_A'])->on('aula')->onUpdate('NO ACTION')->onDelete('NO ACTION');
         });
     }
 
@@ -26,7 +26,7 @@ class AddForeignKeysToHorarioLibreTable extends Migration
     public function down()
     {
         Schema::table('horario_libre', function (Blueprint $table) {
-            $table->dropForeign('fk_Horario_Libre_Aula1');
+            $table->dropForeign('fk_horario_libre_aula1');
         });
     }
 }

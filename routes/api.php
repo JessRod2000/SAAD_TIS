@@ -30,7 +30,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::get('/grupos/{codSIS}/{sisMateria}',[solicitudController::class,'obtenerGrupos']);
     Route::get('/gruposCompartida/{codSIS}/{sisMateria}',[solicitudController::class,'obtenerGruposCompartidos']);
     Route::get('/obtenerGruposDocentes/{codSIS}',[solicitudController::class,'obtenerGruposDocentes']);
-
+ 
     Route::post('/reservaIndividual',[solicitudController::class,'reservaIndividual']);
     Route::post('/reservaCompartida',[solicitudController::class,'reservaCompartida']);
 //para borrar---------------------
@@ -40,7 +40,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::get('/listarGruposMateria/{sisMateria}',[docenteController::class,'listarGruposMateria']);
     Route::put('/asignar/{codSIS}/{sisMateria}/{grupo}',[docenteController::class,'asignar']);
     Route::put('/desasignar/{codSIS}/{sisMateria}/{grupo}',[docenteController::class,'desasignar']);
-    Route::get('/existe/{codSIS}/{contrasenia}',[docenteController::class,'existe']);
+    //Route::get('/existe/{codSIS}/{contrasenia}',[docenteController::class,'existe']);
     Route::get('/listarDocente',[docenteController::class,'listarDocentes']);
     Route::get('/obtenerDocente/{codSIS}',[docenteController::class,'obtenerDocente']);
 });

@@ -7,12 +7,12 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\UsuarioMaterium;
 use App\Models\Grupo;
-
+ 
 class docenteController extends Controller
 {
     public function listarDocentes(){
         $docentes = \DB::table('users')
-        ->select('Codigo_SIS_U','Nombre_U','Apelllido_Paterno_U','Apellido_Materno_U','Correo_U')
+        ->select('Codigo_SIS_U','Nombre_U','Apellido_Paterno_U','Apellido_Materno_U','Correo_U')
         ->where('Rol_U','=',1)
         ->get();
 
@@ -25,7 +25,7 @@ class docenteController extends Controller
 
     public function gruposMateria($sisMateria){
         $grupos = \DB::table('grupo')
-        ->where('materia_SisM_M','=',$sisMateria)
+        ->where('materia_Codigo_M','=',$sisMateria)
         ->get();
 
         return $grupos;
@@ -34,8 +34,8 @@ class docenteController extends Controller
     public function listarGruposMateria($sisMateria){
         $grupos = \DB::table('usuario_materia')
         ->select('Grupo_UM')
-        ->where('materia_SisM_M','=',$sisMateria)
-        ->where('asignado_UM','=',1)
+        ->where('materia_Codigo_M','=',$sisMateria)
+        ->where('Asignado_UM','=',1)
         ->get();
 
         return $grupos;

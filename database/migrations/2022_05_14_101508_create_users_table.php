@@ -17,9 +17,9 @@ class CreateUsersTable extends Migration
             $table->integer('Codigo_SIS_U')->primary();
             $table->string('Nombre_U', 25);
             $table->string('Contrasenia_U', 500);
-            $table->string('Correo_U', 50)->nullable();
-            $table->string('Apelllido_Paterno_U', 15);
-            $table->string('Apellido_Materno_U', 15)->nullable();
+            $table->string('Correo_U', 50);
+            $table->string('Apellido_Paterno_U', 15);
+            $table->string('Apellido_Materno_U', 15);
             $table->integer('Rol_U');
         });
     }

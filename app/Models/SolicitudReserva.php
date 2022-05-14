@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * Class SolicitudReserva
  * 
  * @property int $Id_SR
- * @property int $materia_SisM_M
+ * @property int $materia_Codigo_M
  * @property Carbon $Fecha_SR
  * @property Carbon $Hora_Inicio_SR
  * @property int $Cantidad_Periodos_SR
@@ -22,7 +22,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $Estado_Atendido_SR
  * @property string $Motivo_SR
  * @property Carbon $Hora_Final_SR
- * @property Carbon|null $Creado_en_SR
+ * @property Carbon $Creado_en_SR
  * 
  * @property Materium $materium
  * @property Collection|GrupoSolicitudReserva[] $grupo_solicitud_reservas
@@ -34,10 +34,11 @@ use Illuminate\Database\Eloquent\Model;
 class SolicitudReserva extends Model
 {
 	protected $table = 'solicitud_reserva';
+	protected $primaryKey = 'Id_SR';
 	public $timestamps = false;
 
 	protected $casts = [
-		'materia_SisM_M' => 'int',
+		'materia_Codigo_M' => 'int',
 		'Cantidad_Periodos_SR' => 'int',
 		'Numero_Estudiantes_SR' => 'int',
 		'Estado_Atendido_SR' => 'int'
@@ -51,6 +52,7 @@ class SolicitudReserva extends Model
 	];
 
 	protected $fillable = [
+		'materia_Codigo_M',
 		'Fecha_SR',
 		'Hora_Inicio_SR',
 		'Cantidad_Periodos_SR',
@@ -63,7 +65,7 @@ class SolicitudReserva extends Model
 
 	public function materium()
 	{
-		return $this->belongsTo(Materium::class, 'materia_SisM_M');
+		return $this->belongsTo(Materium::class, 'materia_Codigo_M');
 	}
 
 	public function grupo_solicitud_reservas()
@@ -73,11 +75,11 @@ class SolicitudReserva extends Model
 
 	public function reporte_reservas()
 	{
-		return $this->hasMany(ReporteReserva::class, 'Id_SR_RR');
+		return $this->hasMany(ReporteReserva::class, 'solicitud_reserva_Id_SR');
 	}
 
 	public function usuario_solicituds()
 	{
-		return $this->hasMany(UsuarioSolicitud::class, 'Id_SR_US');
+		return $this->hasMany(UsuarioSolicitud::class, 'solicitud_reserva_Id_SR');
 	}
 }

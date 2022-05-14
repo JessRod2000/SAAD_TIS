@@ -14,8 +14,10 @@ class CreateAulaTable extends Migration
     public function up()
     {
         Schema::create('aula', function (Blueprint $table) {
-            $table->string('Codi_A', 15)->primary();
-            $table->integer('Capa_A');
+            $table->string('Id_A', 15)->primary();
+            $table->string('Edificio_A', 70);
+            $table->integer('Capacidad_A');
+            $table->string('Descripcion_A', 100);
         });
     }
 

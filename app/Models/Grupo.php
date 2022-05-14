@@ -11,8 +11,9 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Class Grupo
  * 
- * @property string $id_grupo
- * @property int $materia_SisM_M
+ * @property string $Id_G
+ * @property int $Asignado_G
+ * @property int $materia_Codigo_M
  * 
  * @property Materium $materium
  *
@@ -25,11 +26,16 @@ class Grupo extends Model
 	public $timestamps = false;
 
 	protected $casts = [
-		'materia_SisM_M' => 'int'
+		'Asignado_G' => 'int',
+		'materia_Codigo_M' => 'int'
+	];
+
+	protected $fillable = [
+		'Asignado_G'
 	];
 
 	public function materium()
 	{
-		return $this->belongsTo(Materium::class, 'materia_SisM_M');
+		return $this->belongsTo(Materium::class, 'materia_Codigo_M');
 	}
 }

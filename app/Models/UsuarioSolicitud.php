@@ -11,8 +11,8 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Class UsuarioSolicitud
  * 
- * @property int $Id_SR_US
- * @property int $usuario_Codigo_SIS_U
+ * @property int $solicitud_reserva_Id_SR
+ * @property int $usuarios_Codigo_SIS_U
  * 
  * @property SolicitudReserva $solicitud_reserva
  * @property User $user
@@ -26,17 +26,17 @@ class UsuarioSolicitud extends Model
 	public $timestamps = false;
 
 	protected $casts = [
-		'Id_SR_US' => 'int',
-		'usuario_Codigo_SIS_U' => 'int'
+		'solicitud_reserva_Id_SR' => 'int',
+		'usuarios_Codigo_SIS_U' => 'int'
 	];
 
 	public function solicitud_reserva()
 	{
-		return $this->belongsTo(SolicitudReserva::class, 'Id_SR_US');
+		return $this->belongsTo(SolicitudReserva::class, 'solicitud_reserva_Id_SR');
 	}
 
 	public function user()
 	{
-		return $this->belongsTo(User::class, 'usuario_Codigo_SIS_U');
+		return $this->belongsTo(User::class, 'usuarios_Codigo_SIS_U');
 	}
 }

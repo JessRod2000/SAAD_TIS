@@ -12,42 +12,42 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Class Materium
  * 
- * @property int $SisM_M
- * @property string $Nomb_M
+ * @property int $Codigo_M
+ * @property string $Nombre_M
  * 
  * @property Collection|Grupo[] $grupos
  * @property Collection|SolicitudReserva[] $solicitud_reservas
- * @property UsuarioMaterium $usuario_materium
+ * @property Collection|UsuarioMaterium[] $usuario_materia
  *
  * @package App\Models
  */
 class Materium extends Model
 {
 	protected $table = 'materia';
-	protected $primaryKey = 'SisM_M';
+	protected $primaryKey = 'Codigo_M';
 	public $incrementing = false;
 	public $timestamps = false;
 
 	protected $casts = [
-		'SisM_M' => 'int'
+		'Codigo_M' => 'int'
 	];
 
 	protected $fillable = [
-		'Nomb_M'
+		'Nombre_M'
 	];
 
 	public function grupos()
 	{
-		return $this->hasMany(Grupo::class, 'materia_SisM_M');
+		return $this->hasMany(Grupo::class, 'materia_Codigo_M');
 	}
 
 	public function solicitud_reservas()
 	{
-		return $this->hasMany(SolicitudReserva::class, 'materia_SisM_M');
+		return $this->hasMany(SolicitudReserva::class, 'materia_Codigo_M');
 	}
 
-	public function usuario_materium()
+	public function usuario_materia()
 	{
-		return $this->hasOne(UsuarioMaterium::class, 'materia_SisM_M');
+		return $this->hasMany(UsuarioMaterium::class, 'materia_Codigo_M');
 	}
 }
