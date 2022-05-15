@@ -50,7 +50,7 @@ class User extends Authenticatable
 		'Nombre_U',
 		'Contrasenia_U',
 		'Correo_U',
-		'Apelllido_Paterno_U',
+		'Apellido_Paterno_U',
 		'Apellido_Materno_U',
 		'Rol_U'
 	];
