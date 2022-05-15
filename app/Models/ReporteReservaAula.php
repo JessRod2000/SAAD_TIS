@@ -15,7 +15,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $reporte_reserva_Id_RR
  * @property string $aula_Id_A
  * @property Carbon $Fecha_Reserva_Ocupado_RRA
- * @property Carbon $Horario_Ocupado_RRA
+ * @property Carbon $Horario_Ocupado_Inicio_RRA
+ * @property int $Periodos_RRA
+ * @property int $Estado_RRA
  * 
  * @property Aula $aula
  * @property ReporteReserva $reporte_reserva
@@ -29,17 +31,21 @@ class ReporteReservaAula extends Model
 	public $timestamps = false;
 
 	protected $casts = [
-		'reporte_reserva_Id_RR' => 'int'
+		'reporte_reserva_Id_RR' => 'int',
+		'Periodos_RRA' => 'int',
+		'Estado_RRA' => 'int'
 	];
 
 	protected $dates = [
 		'Fecha_Reserva_Ocupado_RRA',
-		'Horario_Ocupado_RRA'
+		'Horario_Ocupado_Inicio_RRA'
 	];
 
 	protected $fillable = [
 		'Fecha_Reserva_Ocupado_RRA',
-		'Horario_Ocupado_RRA'
+		'Horario_Ocupado_Inicio_RRA',
+		'Periodos_RRA',
+		'Estado_RRA'
 	];
 
 	public function aula()

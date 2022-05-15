@@ -17,7 +17,9 @@ class CreateReporteReservaAulaTable extends Migration
             $table->integer('reporte_reserva_Id_RR')->index('fk_reporte_reserva_has_aula_reporte_reserva1_idx');
             $table->string('aula_Id_A', 15)->index('fk_reporte_reserva_has_aula_aula1_idx');
             $table->date('Fecha_Reserva_Ocupado_RRA');
-            $table->time('Horario_Ocupado_RRA');
+            $table->time('Horario_Ocupado_Inicio_RRA');
+            $table->integer('Periodos_RRA');
+            $table->integer('Estado_RRA');
 
             $table->primary(['reporte_reserva_Id_RR', 'aula_Id_A']);
         });

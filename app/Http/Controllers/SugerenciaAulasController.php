@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\SolicitudReserva;
 use Illuminate\Http\Request;
 use App\Models\Aula;
 
@@ -11,16 +11,17 @@ class SugerenciaAulasController extends Controller
    
     public function detalleReserva($idReserva){
        
-       
+        $reserva = new SolicitudReserva();
         $reserva = \DB::table('solicitud_reserva')
         ->where('Id_SR','=',$idReserva)
         ->get();
-       
+        $hora = $reserva->Hora_Inicio_SR;
+
         
 
-        return $reserva;
+        return $hora;
     }
-
+     //obtener las aulas que tengan libre el dia de la reserva.
     public function listarHorariosAulas($dia){
        
        
@@ -32,6 +33,15 @@ class SugerenciaAulasController extends Controller
         
 
         return $aulas;
+    }
+    public function reservasAceptadas($fecha){
+        $reservas = \DB::table('reporte_reserva_aula')
+        ->join('aula','aula_Id_A','=','Id_A')
+        ->where('Fecha_Reserva_Ocupado_RRA','=',$fecha)
+        ->where('Estado_RRA','=',1)
+        ->get();
+        return $reservas;
+
     }
 
     

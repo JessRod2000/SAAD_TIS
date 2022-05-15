@@ -6,6 +6,7 @@ use App\Http\Controllers\listarMateriaController;
 use App\Http\Controllers\solicitudController;
 use App\Http\Controllers\docenteController;
 use App\Http\Controllers\AutenticarController;
+use App\Http\Controllers\SugerenciaAulasController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -46,13 +47,13 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 
     
 
-    Route::get('/listarHorariosAulas/{dia}',[SugerenciaAulasController::class,'listarHorariosAulas']);
-
-    Route::get('/detalleReserva/{idreserva}',[SugerenciaAulasController::class,'detalleReserva']);
-
-    Route::get('/listarPendientesDoc/{codigoSIS}',[SugerenciaAulasController::class,'listarPendientesDoc']);
-    Route::get('/listarAceptadasDoc/{codigoSIS}',[SugerenciaAulasController::class,'listarAceptadasDoc']);
+   
 });
 
 
+Route::get('/listarHorariosAulas/{dia}',[SugerenciaAulasController::class,'listarHorariosAulas']);
+Route::get('/reservasAceptadas/{fecha}',[SugerenciaAulasController::class,'reservasAceptadas']);
+Route::get('/detalleReserva/{idreserva}',[SugerenciaAulasController::class,'detalleReserva']);
 
+Route::get('/listarPendientesDoc/{codigoSIS}',[SugerenciaAulasController::class,'listarPendientesDoc']);
+Route::get('/listarAceptadasDoc/{codigoSIS}',[SugerenciaAulasController::class,'listarAceptadasDoc']);

@@ -62,6 +62,6 @@ class ReporteReserva extends Model
 	public function aulas()
 	{
 		return $this->belongsToMany(Aula::class, 'reporte_reserva_aula', 'reporte_reserva_Id_RR', 'aula_Id_A')
-					->withPivot('Fecha_Reserva_Ocupado_RRA', 'Horario_Ocupado_RRA');
+					->withPivot('Fecha_Reserva_Ocupado_RRA', 'Horario_Ocupado_Inicio_RRA', 'Periodos_RRA', 'Estado_RRA');
 	}
 }
