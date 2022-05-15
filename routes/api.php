@@ -53,15 +53,11 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::get('/listarDocente',[docenteController::class,'listarDocentes']);
     Route::get('/obtenerDocente/{codSIS}',[docenteController::class,'obtenerDocente']);
 
-    
-
     Route::get('/listarHorariosAulas/{dia}',[SugerenciaAulasController::class,'listarHorariosAulas']);
     Route::get('/reservasAceptadas/{fecha}',[SugerenciaAulasController::class,'reservasAceptadas']);
 
     Route::get('/listarPendientesDoc/{codigoSIS}',[SugerenciaAulasController::class,'listarPendientesDoc']);
     Route::get('/listarAceptadasDoc/{codigoSIS}',[SugerenciaAulasController::class,'listarAceptadasDoc']);
-
-
    
 });
 
