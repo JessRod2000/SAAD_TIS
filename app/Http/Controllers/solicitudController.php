@@ -88,6 +88,17 @@ class solicitudController extends Controller
         ->update(['Estado_Atendido_SR'=>2]);
     }
 
+    public function cancelarAceptada($idReporte){
+        $reserva = \DB::table('reporte_reserva')
+        ->where('Id_RR','=',$idReporte)
+        ->update(['Estado_RR'=>2]);
+
+        $aula = \DB::table('reporte_reserva')
+        ->join('reporte_reserva_aula','reporte_reserva_Id_RR','=','Id_RR')
+        ->where('Id_RR','=',$idReporte)
+        ->update(['Estado_RR'=>2]);
+    }
+
     public function reservaIndividual(Request $request){
         $reserva = new SolicitudReserva();
         $usuarioSolicitud = new UsuarioSolicitud();

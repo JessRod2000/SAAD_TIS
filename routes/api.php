@@ -35,7 +35,8 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
  
     Route::post('/reservaIndividual',[solicitudController::class,'reservaIndividual']);
     Route::post('/reservaCompartida',[solicitudController::class,'reservaCompartida']);
-
+    
+    Route::patch('/cancelarAceptada/{idReporte}',[solicitudController::class,'cancelarAceptada']);
     Route::patch('/cancelarPendiente/{idReserva}',[solicitudController::class,'cancelarPendiente']);
     Route::get('/detalleReserva/{idReserva}',[solicitudController::class,'detalleReserva']);
 
@@ -52,16 +53,11 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::get('/listarDocente',[docenteController::class,'listarDocentes']);
     Route::get('/obtenerDocente/{codSIS}',[docenteController::class,'obtenerDocente']);
 
-    
-
-
     Route::get('/listarHorariosAulas/{dia}',[SugerenciaAulasController::class,'listarHorariosAulas']);
     Route::get('/reservasAceptadas/{fecha}',[SugerenciaAulasController::class,'reservasAceptadas']);
-    Route::get('/detalleReserva/{idreserva}',[SugerenciaAulasController::class,'detalleReserva']);
 
     Route::get('/listarPendientesDoc/{codigoSIS}',[SugerenciaAulasController::class,'listarPendientesDoc']);
     Route::get('/listarAceptadasDoc/{codigoSIS}',[SugerenciaAulasController::class,'listarAceptadasDoc']);
-
    
 });
 
