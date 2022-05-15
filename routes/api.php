@@ -54,6 +54,14 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 
     
 
+    Route::get('/listarHorariosAulas/{dia}',[SugerenciaAulasController::class,'listarHorariosAulas']);
+    Route::get('/reservasAceptadas/{fecha}',[SugerenciaAulasController::class,'reservasAceptadas']);
+    Route::get('/detalleReserva/{idreserva}',[SugerenciaAulasController::class,'detalleReserva']);
+
+    Route::get('/listarPendientesDoc/{codigoSIS}',[SugerenciaAulasController::class,'listarPendientesDoc']);
+    Route::get('/listarAceptadasDoc/{codigoSIS}',[SugerenciaAulasController::class,'listarAceptadasDoc']);
+
+
    
 });
 
