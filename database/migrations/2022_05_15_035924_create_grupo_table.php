@@ -14,7 +14,7 @@ class CreateGrupoTable extends Migration
     public function up()
     {
         Schema::create('grupo', function (Blueprint $table) {
-            $table->string('Id_G', 5);
+            $table->integer('Id_G');
             $table->integer('Asignado_G');
             $table->integer('materia_Codigo_M')->index('fk_grupo_materia1_idx');
 
