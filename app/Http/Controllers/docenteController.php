@@ -41,23 +41,46 @@ class docenteController extends Controller
         return $grupos;
     }
 
+    public function gruposParaAsignar(){
+        $grupos = \DB::table('grupo')
+        ->join('materia','Codigo_M','=','materia_Codigo_M')
+        ->select('Id_G','Codigo_M','Nombre_M')
+        ->where('Asignado_G','=',0)
+        ->get();
+
+        return $grupos;
+    }
+
     public function asignar($codSIS,$sisMateria,$grupo){
+        $grupoAsignar = \DB::table('grupo')
+        ->where('materia_Codigo_M','=',$sisMateria)
+        ->where('Id_G','=',$grupo)
+        ->update(['Asignado_G'=>1]);
+
         $asignado = new UsuarioMaterium();
 
         $asignado->Grupo_UM = $grupo;
         $asignado->asignado_UM = 1;
-        $asignado->materia_SisM_M = $sisMateria;
+        $asignado->Fecha_Asignado_UM = now();
+        $asignado->Fecha_Desasignado_UM = null;
+        $asignado->materia_Codigo_M = $sisMateria;
         $asignado->usuario_Codigo_SIS_U = $codSIS;
 
         $asignado->save();
     }
 
     public function desasignar($codSIS,$sisMateria,$grupo){
-        $afectado = \DB::table('usuario_materia')
-        ->where('usuario_Codigo_SIS_U','=',$codSIS)
-        ->where('materia_SisM_M','=',$materia)
+        $grupoDesasignar = \DB::table('grupo')
+        ->where('materia_Codigo_M','=',$sisMateria)
+        ->where('Id_G','=',$grupo)
+        ->update(['Asignado_G'=>0]);
+
+        $desasignar = \DB::table('usuario_materia')
         ->where('Grupo_UM','=',$grupo)
-        ->update(['asignado_UM'=>0]);
+        ->where('Asignado_UM','=',1)
+        ->where('materia_Codigo_M','=',$sisMateria)
+        ->where('usuario_Codigo_SIS_U','=',$codSIS)
+        ->update(['Asignado_UM'=>0,'Fecha_Desasignado_UM'=>now()]);
     }
 
     public function existe($codSIS,$contrasenia){

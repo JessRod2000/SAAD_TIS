@@ -64,6 +64,30 @@ class solicitudController extends Controller
         return $grupos;
     }
 
+    public function detalleReserva($idReserva){
+        $reserva = \DB::table('solicitud_reserva')
+        ->where('Id_SR','=',$idReserva)
+        ->get();
+
+        $docentes = \DB::table('solicitud_reserva')
+        ->join('usuario_solicitud','Id_SR','=','solicitud_reserva_Id_SR')
+        ->join('users','Codigo_SIS_U','=','usuarios_Codigo_SIS_U')
+        ->select('Nombre_U','Apellido_Paterno_U','Apellido_Materno_U','Codigo_SIS_U')
+        ->where('Id_SR','=',$idReserva)
+        ->get();
+
+        $response['reserva']=$reserva;
+        $response['docentes']=$docentes;
+
+        return $response;
+    }
+
+    public function cancelarPendiente($idReserva){
+        $reserva = \DB::table('solicitud_reserva')
+        ->where('Id_SR','=',$idReserva)
+        ->update(['Estado_Atendido_SR'=>2]);
+    }
+
     public function reservaIndividual(Request $request){
         $reserva = new SolicitudReserva();
         $usuarioSolicitud = new UsuarioSolicitud();
