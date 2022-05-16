@@ -20,7 +20,7 @@ class AutenticarController extends Controller
         $user->Nombre_U= $request->Nombre_U;
         $user->Contrasenia_U= $request->Contrasenia_U;
         $user->Correo_U= $request->Correo_U;
-        $user->Apelllido_Paterno_U= $request->Apelllido_Paterno_U;
+        $user->Apellido_Paterno_U= $request->Apellido_Paterno_U;
         $user->Apellido_Materno_U= $request->Apellido_Materno_U;
         $user->Rol_U= $request->Rol_U;
         $user->save();
@@ -45,7 +45,7 @@ class AutenticarController extends Controller
             'correo' => $user->Correo_U,
             'nombre' => $user->Nombre_U,
             'codigosis' => $user->Codigo_SIS_U,
-            'apellido_paterno' => $user->Apelllido_Paterno_U,
+            'apellido_paterno' => $user->Apellido_Paterno_U,
             'apellido_materno' => $user->Apellido_Materno_U,
             'rol'=>$user->Rol_U,
             'token'=> $token
