@@ -21,7 +21,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string $Nombre_U
  * @property string $Contraseña_U
  * @property string|null $Correo_U
- * @property string $Apelllido_Paterno_U
+ * @property string $Apellido_Paterno_U
  * @property string|null $Apellido_Materno_U
  * @property int $Rol_U
  * 
@@ -50,7 +50,7 @@ class User extends Authenticatable
 		'Nombre_U',
 		'Contrasenia_U',
 		'Correo_U',
-		'Apelllido_Paterno_U',
+		'Apellido_Paterno_U',
 		'Apellido_Materno_U',
 		'Rol_U'
 	];

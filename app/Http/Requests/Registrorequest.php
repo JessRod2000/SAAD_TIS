@@ -29,7 +29,7 @@ class Registrorequest extends FormRequest
             'Nombre_U'=> 'required',
             'Contrasenia_U'=> 'required',
             'Correo_U'=> 'required',
-            'Apelllido_Paterno_U'=> 'required',
+            'Apellido_Paterno_U'=> 'required',
             'Apellido_Materno_U'=> 'required',
             'Rol_U'=> 'required'
         ];
