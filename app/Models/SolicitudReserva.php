@@ -25,7 +25,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon $Creado_en_SR
  * 
  * @property Materium $materium
- * @property Collection|GrupoSolicitudReserva[] $grupo_solicitud_reservas
  * @property Collection|ReporteReserva[] $reporte_reservas
  * @property Collection|UsuarioSolicitud[] $usuario_solicituds
  *
@@ -66,11 +65,6 @@ class SolicitudReserva extends Model
 	public function materium()
 	{
 		return $this->belongsTo(Materium::class, 'materia_Codigo_M');
-	}
-
-	public function grupo_solicitud_reservas()
-	{
-		return $this->hasMany(GrupoSolicitudReserva::class, 'solicitud_reserva_Id_SR');
 	}
 
 	public function reporte_reservas()

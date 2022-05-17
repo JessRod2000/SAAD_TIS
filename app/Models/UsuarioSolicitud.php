@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  * 
  * @property int $solicitud_reserva_Id_SR
  * @property int $usuarios_Codigo_SIS_U
+ * @property string $Id_G_US
  * 
  * @property SolicitudReserva $solicitud_reserva
  * @property User $user

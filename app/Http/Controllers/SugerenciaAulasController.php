@@ -51,11 +51,11 @@ class SugerenciaAulasController extends Controller
         ->join('materia', 'materia_Codigo_M','=','materia.Codigo_M')
         ->join('usuario_solicitud','solicitud_reserva_Id_SR','=','Id_SR')
         ->join('users','usuarios_Codigo_SIS_U','=','Codigo_SIS_U')
-        ->select('Nombre_M', 'Id_Grupo_GSR','Creado_en_SR', 'Hora_Inicio_SR','Id_SR')
+        ->select('Id_SR','Nombre_M', 'Id_Grupo_GSR','Creado_en_SR', 'Hora_Inicio_SR','Id_SR')
         ->join('grupo_solicitud_reserva','Id_SR','=','grupo_solicitud_reserva.solicitud_reserva_Id_SR')
         ->where('Codigo_SIS_U','=',$codSIS)
         ->where('Estado_Atendido_SR','=',0)
-        ->where('Creado_en_SR','>',now())
+        //->where('Creado_en_SR','>',now())
         ->orderBy('Creado_en_SR','ASC')
         ->get();
         return $reservas;
@@ -73,10 +73,10 @@ class SugerenciaAulasController extends Controller
         ->join('solicitud_reserva','solicitud_reserva_Id_SR','=','Id_SR')
         ->join('materia', 'materia_Codigo_M','=','materia.Codigo_M')
         ->join('usuario_solicitud','usuario_solicitud.solicitud_reserva_Id_SR','=','solicitud_reserva.Id_SR')
-        ->select('Nombre_M', 'Fecha_SR','Hora_Inicio_SR','Hora_Final_SR')
+        ->select('Id_SR','Nombre_M', 'Fecha_SR','Hora_Inicio_SR','Hora_Final_SR')
         ->where('usuarios_Codigo_SIS_U','=',$codSIS)
         ->where('Estado_RR','=',1)
-        ->where('Fecha_SR','>',now())
+        //->where('Fecha_SR','>',now())
         ->orderBy('Fecha_SR','ASC')
         ->get();
         return $reservas;
