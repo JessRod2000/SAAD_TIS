@@ -14,7 +14,10 @@ use App\Models\UsuarioMaterium;
 class solicitudController extends Controller
 {
     public function obtenerMaterias(){
-        return Materium::all();
+        $docentes = [199800245,199901652,199901652,200000459];
+        $longitud = sizeof($docentes);
+        return $longitud;
+        //return Materium::all();
     }
 
     public function obtenerGruposDocentes($codSIS){
@@ -65,39 +68,19 @@ class solicitudController extends Controller
     }
 
     public function detalleReserva($idReserva){
-        $reserva = \DB::table('solicitud_reserva')
+        $detalle = \DB::table('solicitud_reserva')
         ->where('Id_SR','=',$idReserva)
         ->get();
 
         $grupos = \DB::table('solicitud_reserva')
-        ->join('grupo_solicitud_reserva','solicitud_reserva_Id_SR','=','Id_SR')
-        ->select('Id_Grupo_GSR','materia_Codigo_M')
-        ->where('Id_SR','=',$idReserva)
-        ->get();
-/*
-        $docentes = \DB::table('solicitud_reserva')
         ->join('usuario_solicitud','Id_SR','=','solicitud_reserva_Id_SR')
         ->join('users','Codigo_SIS_U','=','usuarios_Codigo_SIS_U')
-        ->join('usuario_materia','usuario_Codigo_SIS_U','=','usuarios_Codigo_SIS_U')
-        ->select('Grupo_UM','Nombre_U','Apellido_Paterno_U','Apellido_Materno_U','Codigo_SIS_U')
+        ->join('materia','materia_Codigo_M','=','Codigo_M')
+        ->select('Id_G_US','Codigo_M','Nombre_M','Nombre_U','Apellido_Paterno_U','Apellido_Materno_U','Codigo_SIS_U')
         ->where('Id_SR','=',$idReserva)
         ->get();
-*/
-        $respuesta['reserva']= $reserva;
-        $respuesta['grupos']= $grupos;
-        
-        foreach($grupos as $gru){
-            $docente = \DB::table('usuario_materia')
-            ->join('users','Codigo_SIS_U','=','usuario_Codigo_SIS_U')
-            ->select('Grupo_UM','Codigo_SIS_U','Nombre_U')
-            ->where('materia_Codigo_M','=',$gru->materia_Codigo_M)
-            ->where('Grupo_UM','=',$gru->Id_Grupo_GSR)
-            ->get();
-            $respuesta[$gru->Id_Grupo_GSR]=$docente;
-        }
-        
-        //$respuesta['docente']=+$docente;
-        //$respuesta['docentes']=$docentes;
+        $respuesta['detalle']=$detalle;
+        $respuesta['grupos']=$grupos;
 
         return $respuesta;
     }
@@ -118,7 +101,7 @@ class solicitudController extends Controller
         ->where('Id_RR','=',$idReporte)
         ->update(['Estado_RRA'=>2]);
     }
-
+/*
     public function reservaIndividual(Request $request){
         $reserva = new SolicitudReserva();
         $usuarioSolicitud = new UsuarioSolicitud();
@@ -160,12 +143,14 @@ class solicitudController extends Controller
         
         return $response;
     }
-
+*/
     public function reservaCompartida(Request $request){
         $reserva = new SolicitudReserva();
         
         $docentes = $request->docentes;
         $grupos = $request->grupos;
+
+        $longitud = sizeof($grupos);
 
         $reserva->materia_Codigo_M=$request->materia_SisM_M;
         $reserva->Fecha_SR = $request-> Fecha_SR;
@@ -179,6 +164,15 @@ class solicitudController extends Controller
 
         $reserva->save();
 
+        for ($i = 0; $i < $longitud; $i++) {
+            $usuarioSolicitud = new UsuarioSolicitud();
+
+            $usuarioSolicitud->solicitud_reserva_Id_SR = $reserva->Id_SR;
+            $usuarioSolicitud->usuarios_Codigo_SIS_U = $docentes[$i];
+            $usuarioSolicitud->Id_G_US = $grupos[$i];
+            $usuarioSolicitud->save();
+        }
+/*
         foreach($docentes as $docen){
 
             $usuarioSolicitud = new UsuarioSolicitud();
@@ -198,7 +192,7 @@ class solicitudController extends Controller
 
             $grupo->save();
         }
-
+*/
         $response['solicitud_reserva']=$reserva;
         
         return $response;
