@@ -69,17 +69,37 @@ class solicitudController extends Controller
         ->where('Id_SR','=',$idReserva)
         ->get();
 
+        $grupos = \DB::table('solicitud_reserva')
+        ->join('grupo_solicitud_reserva','solicitud_reserva_Id_SR','=','Id_SR')
+        ->select('Id_Grupo_GSR','materia_Codigo_M')
+        ->where('Id_SR','=',$idReserva)
+        ->get();
+/*
         $docentes = \DB::table('solicitud_reserva')
         ->join('usuario_solicitud','Id_SR','=','solicitud_reserva_Id_SR')
         ->join('users','Codigo_SIS_U','=','usuarios_Codigo_SIS_U')
-        ->select('Nombre_U','Apellido_Paterno_U','Apellido_Materno_U','Codigo_SIS_U')
+        ->join('usuario_materia','usuario_Codigo_SIS_U','=','usuarios_Codigo_SIS_U')
+        ->select('Grupo_UM','Nombre_U','Apellido_Paterno_U','Apellido_Materno_U','Codigo_SIS_U')
         ->where('Id_SR','=',$idReserva)
         ->get();
+*/
+        $respuesta['reserva']= $reserva;
+        $respuesta['grupos']= $grupos;
+        
+        foreach($grupos as $gru){
+            $docente = \DB::table('usuario_materia')
+            ->join('users','Codigo_SIS_U','=','usuario_Codigo_SIS_U')
+            ->select('Grupo_UM','Codigo_SIS_U','Nombre_U')
+            ->where('materia_Codigo_M','=',$gru->materia_Codigo_M)
+            ->where('Grupo_UM','=',$gru->Id_Grupo_GSR)
+            ->get();
+            $respuesta[$gru->Id_Grupo_GSR]=$docente;
+        }
+        
+        //$respuesta['docente']=+$docente;
+        //$respuesta['docentes']=$docentes;
 
-        $response['reserva']=$reserva;
-        $response['docentes']=$docentes;
-
-        return $response;
+        return $respuesta;
     }
 
     public function cancelarPendiente($idReserva){
@@ -96,7 +116,7 @@ class solicitudController extends Controller
         $aula = \DB::table('reporte_reserva')
         ->join('reporte_reserva_aula','reporte_reserva_Id_RR','=','Id_RR')
         ->where('Id_RR','=',$idReporte)
-        ->update(['Estado_RR'=>2]);
+        ->update(['Estado_RRA'=>2]);
     }
 
     public function reservaIndividual(Request $request){

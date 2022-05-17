@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Class Grupo
  * 
- * @property int $Id_G
+ * @property string $Id_G
  * @property int $Asignado_G
  * @property int $materia_Codigo_M
  * 
@@ -26,7 +26,6 @@ class Grupo extends Model
 	public $timestamps = false;
 
 	protected $casts = [
-		'Id_G' => 'int',
 		'Asignado_G' => 'int',
 		'materia_Codigo_M' => 'int'
 	];

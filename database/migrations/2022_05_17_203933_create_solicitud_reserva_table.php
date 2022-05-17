@@ -23,7 +23,7 @@ class CreateSolicitudReservaTable extends Migration
             $table->integer('Estado_Atendido_SR');
             $table->string('Motivo_SR', 200);
             $table->time('Hora_Final_SR');
-            $table->timestamp('Creado_en_SR');
+            $table->timestamp('Creado_en_SR')->useCurrentOnUpdate()->useCurrent();
         });
     }
 
