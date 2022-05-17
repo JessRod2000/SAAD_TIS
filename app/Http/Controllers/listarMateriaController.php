@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\SolicitudReserva;
-use App\Models\UsuarioSolicitud;
 use App\Models\User;
 use App\Models\Materium;
 
