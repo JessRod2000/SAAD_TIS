@@ -67,16 +67,17 @@ class SugerenciaAulasController extends Controller
     //1= aceptado
     //2 = cancelado
 
+  
     public function listarAceptadasDoc($codSIS)
     {
         $reservas = \DB::table('reporte_reserva')
-        ->join('solicitud_reserva','solicitud_reserva_Id_SR','=','Id_SR')
-        ->join('materia', 'materia_Codigo_M','=','materia.Codigo_M')
-        ->join('usuario_solicitud','usuario_solicitud.solicitud_reserva_Id_SR','=','solicitud_reserva.Id_SR')
-        ->select('Nombre_M', 'Fecha_SR','Hora_Inicio_SR','Hora_Final_SR')
+        ->join('solicitud_reserva','reporte_reserva.solicitud_reserva_Id_SR','=','solicitud_reserva.Id_SR')
+        ->join('usuario_solicitud','reporte_reserva.solicitud_reserva_Id_SR','=','usuario_solicitud.solicitud_reserva_Id_SR')
+         ->join('materia', 'materia_Codigo_M','=','materia.Codigo_M')
+    
+        // ->select('Nombre_M', 'Fecha_SR','Hora_Inicio_SR','Hora_Final_SR')
         ->where('usuarios_Codigo_SIS_U','=',$codSIS)
-        ->where('Estado_RR','=',1)
-        ->where('Fecha_SR','>',now())
+         ->where('Estado_RR','=',1)
         ->orderBy('Fecha_SR','ASC')
         ->get();
         return $reservas;
