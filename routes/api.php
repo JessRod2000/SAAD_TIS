@@ -33,11 +33,11 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::get('/gruposCompartida/{codSIS}/{sisMateria}',[solicitudController::class,'obtenerGruposCompartidos']);
     Route::get('/obtenerGruposDocentes/{codSIS}',[solicitudController::class,'obtenerGruposDocentes']);
  
-    Route::post('/reservaIndividual',[solicitudController::class,'reservaIndividual']);
     Route::post('/reservaCompartida',[solicitudController::class,'reservaCompartida']);
     
     Route::patch('/cancelarAceptada/{idReporte}',[solicitudController::class,'cancelarAceptada']);
     Route::patch('/cancelarPendiente/{idReserva}',[solicitudController::class,'cancelarPendiente']);
+    
     Route::get('/detalleReserva/{idReserva}',[solicitudController::class,'detalleReserva']);
 
 //para borrar---------------------
