@@ -69,6 +69,7 @@ class solicitudController extends Controller
 
     public function detalleReserva($idReserva){
         $detalle = \DB::table('solicitud_reserva')
+        ->join('materia','materia_Codigo_M','=','Codigo_M')
         ->where('Id_SR','=',$idReserva)
         ->get();
 
@@ -101,49 +102,7 @@ class solicitudController extends Controller
         ->where('Id_RR','=',$idReporte)
         ->update(['Estado_RRA'=>2]);
     }
-/*
-    public function reservaIndividual(Request $request){
-        $reserva = new SolicitudReserva();
-        $usuarioSolicitud = new UsuarioSolicitud();
-        
-        $grupos = $request->grupos;
 
-        $reserva->materia_Codigo_M=$request->materia_SisM_M;
-        $reserva->Fecha_SR = $request-> Fecha_SR;
-        $reserva->Hora_Inicio_SR = $request-> Hora_Inicio_SR;
-        $reserva->Cantidad_Periodos_SR = $request-> Cantidad_Periodos_SR;
-        $reserva->Numero_Estudiantes_SR = $request-> Numero_Estudiantes_SR;
-        $reserva->Estado_Atendido_SR = $request-> Estado_Atendido_SR;
-        $reserva->Motivo_SR = $request-> Motivo_SR;
-        $reserva->Hora_Final_SR = $request-> Hora_Final_SR;
-        $reserva->Creado_en_SR = now();
-
-        $reserva->save();
-        return $reserva;
-        $usuarioSolicitud->solicitud_reserva_Id_SR = $reserva->Id_SR;
-        $usuarioSolicitud->usuarios_Codigo_SIS_U = $request->usuario_Codigo_SIS_U;
-
-        $usuarioSolicitud->save();
-
-        foreach($grupos as $gru){
-            $grupo = new GrupoSolicitudReserva();
-
-            $grupo->Id_Grupo_GSR= $gru;
-            $grupo->solicitud_reserva_Id_SR = $reserva->Id_SR;
-            //$grupo->solicitud_reserva_materia_SisM_M = $request->materia_SisM_M;
-
-            $response['grupo_solicitud_reserva']=$grupo;
-
-            $grupo->save();
-        }
-
-        $response['solicitud_reserva']=$reserva;
-        $response['usuario_solicitud']=$usuarioSolicitud;
-        
-        
-        return $response;
-    }
-*/
     public function reservaCompartida(Request $request){
         $reserva = new SolicitudReserva();
         
@@ -172,27 +131,7 @@ class solicitudController extends Controller
             $usuarioSolicitud->Id_G_US = $grupos[$i];
             $usuarioSolicitud->save();
         }
-/*
-        foreach($docentes as $docen){
 
-            $usuarioSolicitud = new UsuarioSolicitud();
-
-            $usuarioSolicitud->solicitud_reserva_Id_SR = $reserva->Id_SR;
-            $usuarioSolicitud->usuarios_Codigo_SIS_U = $docen;
-            $usuarioSolicitud->save();
-        }
-
-        foreach($grupos as $gru){
-
-            $grupo = new GrupoSolicitudReserva();
-
-            $grupo->Id_Grupo_GSR = $gru;
-            $grupo->solicitud_reserva_Id_SR = $reserva->Id_SR;
-            //$grupo->solicitud_reserva_materia_Codigo_M = $request->materia_Codigo_M;
-
-            $grupo->save();
-        }
-*/
         $response['solicitud_reserva']=$reserva;
         
         return $response;
