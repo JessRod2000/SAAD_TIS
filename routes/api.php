@@ -38,7 +38,8 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::patch('/cancelarAceptada/{idReporte}',[solicitudController::class,'cancelarAceptada']);
     Route::patch('/cancelarPendiente/{idReserva}',[solicitudController::class,'cancelarPendiente']);
     
-    Route::get('/detalleReserva/{idReserva}',[solicitudController::class,'detalleReserva']);
+    Route::get('/detalleReservaPendiente/{idReserva}',[solicitudController::class,'detalleReservaPendiente']);
+    Route::get('/detalleReservaAtendida/{idReserva}',[solicitudController::class,'detalleReservaAtendida']);
 
 //para borrar---------------------
     Route::get('/index',[docenteController::class,'index']);
