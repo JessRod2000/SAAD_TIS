@@ -8,19 +8,7 @@ use App\Models\Aula;
 class SugerenciaAulasController extends Controller
 {
     //
-   
-    public function detalleReserva($idReserva){
-       
-        $reserva = new SolicitudReserva();
-        $reserva = \DB::table('solicitud_reserva')
-        ->where('Id_SR','=',$idReserva)
-        ->get();
-        $hora = $reserva->Hora_Inicio_SR;
-
-        
-
-        return $hora;
-    }
+  
      //obtener las aulas que tengan libre el dia de la reserva.
     public function listarHorariosAulas($dia){
        
@@ -28,6 +16,18 @@ class SugerenciaAulasController extends Controller
         $aulas = \DB::table('aula')
         ->join('horario_libre','aula_Id_A','=','Id_A')
         ->where('dia_HL','=',$dia)
+        ->get();
+       
+        
+
+        return $aulas;
+    }
+    public function listarAulasEdificios($edificio){
+       
+       
+        $aulas = \DB::table('aula')
+         ->join('horario_libre','aula_Id_A','=','Id_A')
+        ->where('Edificio_A','like',$edificio)
         ->get();
        
         
@@ -82,7 +82,7 @@ class SugerenciaAulasController extends Controller
         ->get();
         return $reservas;
     }
-    public function listarRechadasDoc($codSIS)
+    public function listarRechazadasDoc($codSIS)
     {
         $reservas = \DB::table('reporte_reserva')
         ->join('solicitud_reserva','reporte_reserva.solicitud_reserva_Id_SR','=','solicitud_reserva.Id_SR')
@@ -90,10 +90,24 @@ class SugerenciaAulasController extends Controller
          ->join('materia', 'materia_Codigo_M','=','materia.Codigo_M')
     
        ->select('Id_SR','Nombre_M', 'Id_G_US','Fecha_SR','Hora_Inicio_SR','Hora_Final_SR', 'usuarios_Codigo_SIS_U')
-        ->where('usuarios_Codigo_SIS_U','=',$codSIS)
+         ->where('usuarios_Codigo_SIS_U','=',$codSIS)
          ->where('Estado_RR','=',0)
         ->orderBy('Fecha_SR','ASC')
         ->get();
         return $reservas;
+    }
+
+    public function listarAtendidas(){
+        $reservas = \DB::table('solicitud_reserva')
+         ->join('usuario_solicitud','Id_SR','=','solicitud_reserva_Id_SR')
+         ->join('users','Codigo_SIS_U','=','usuarios_Codigo_SIS_U')
+         ->join('materia','materia_Codigo_M','=','Codigo_M')
+         ->select('Creado_en_SR','Id_SR','Nombre_M','Nombre_U','Apellido_Paterno_U','Apellido_Materno_U','Fecha_SR','Hora_Inicio_SR','Id_G_US')
+         ->where('Fecha_SR','>',now())
+         ->where('Estado_Atendido_SR','=',1) 
+         ->orderBy('Fecha_SR','ASC')
+         ->get();
+
+         return $reservas;
     }
 }
