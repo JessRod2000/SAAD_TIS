@@ -26,6 +26,8 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::get('/listarTodas',[listarMateriaController::class,'listarTodo']);
     Route::get('/listarPendientes',[listarMateriaController::class,'listarPendientes']);
     Route::get('/listarUrgencia',[listarMateriaController::class,'listarUrgencia']);
+    
+
 
     Route::get('/listarMaterias',[solicitudController::class,'obtenerMaterias']);
     Route::get('/materias/{codSIS}',[solicitudController::class,'obtenerMateriasDocente']);
@@ -61,4 +63,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::get('/listarAceptadasDoc/{codigoSIS}',[SugerenciaAulasController::class,'listarAceptadasDoc']);
     
    
+    Route::get('/listarAtendidas',[SugerenciaAulasController::class,'listarAtendidas']);
+    Route::get('/listarRechazadasDoc/{codigoSIS}',[SugerenciaAulasController::class,'listarRechazadasDoc']);
+    Route::get('/listarAulasEdificios/{edificio}',[SugerenciaAulasController::class,'listarAulasEdificios']);
 });
