@@ -7,6 +7,8 @@ use App\Http\Controllers\solicitudController;
 use App\Http\Controllers\docenteController;
 use App\Http\Controllers\AutenticarController;
 use App\Http\Controllers\SugerenciaAulasController;
+use App\Http\Controllers\reporteController;
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -43,6 +45,8 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::get('/detalleReservaPendiente/{idReserva}',[solicitudController::class,'detalleReservaPendiente']);
     Route::get('/detalleReservaAtendida/{idReserva}',[solicitudController::class,'detalleReservaAtendida']);
 
+    Route::post('/aceptarSolicitud',[reporteController::class,'aceptarSolicitud']);
+    Route::post('/rechazarSolicitud',[reporteController::class,'rechazarSolicitud']);
 //para borrar---------------------
     Route::get('/index',[docenteController::class,'index']);
 //--------------------------------
