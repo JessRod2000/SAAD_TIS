@@ -103,7 +103,6 @@ class SugerenciaAulasController extends Controller
          ->join('users','Codigo_SIS_U','=','usuarios_Codigo_SIS_U')
          ->join('materia','materia_Codigo_M','=','Codigo_M')
          ->select('Creado_en_SR','Id_SR','Nombre_M','Nombre_U','Apellido_Paterno_U','Apellido_Materno_U','Fecha_SR','Hora_Inicio_SR','Id_G_US')
-         ->where('Fecha_SR','>',now())
          ->where('Estado_Atendido_SR','=',1) 
          ->orderBy('Fecha_SR','ASC')
          ->get();
