@@ -72,7 +72,6 @@ class solicitudController extends Controller
     public function detalleReserva($idReserva){
         $detalle = \DB::table('solicitud_reserva')
         ->join('materia','materia_Codigo_M','=','Codigo_M')
-        ->join('reporte_reserva','solicitud_reserva_Id_SR','=','Id_SR')
         ->where('Id_SR','=',$idReserva)
         ->get();
 
