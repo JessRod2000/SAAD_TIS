@@ -69,7 +69,7 @@ class solicitudController extends Controller
         return $grupos;
     }
 
-    public function detalleReservaPendiente($idReserva){
+    public function detalleReserva($idReserva){
         $detalle = \DB::table('solicitud_reserva')
         ->join('materia','materia_Codigo_M','=','Codigo_M')
         ->where('Id_SR','=',$idReserva)
@@ -92,17 +92,10 @@ class solicitudController extends Controller
         $detalle = \DB::table('solicitud_reserva')
         ->join('materia','materia_Codigo_M','=','Codigo_M')
         ->join('reporte_reserva','solicitud_reserva_Id_SR','=','Id_SR')
+        ->select('Id_RR','Estado_RR','Observacion_RR','Fecha_Reporte_RR','usuario_Codigo_SIS_U')
         ->where('Id_SR','=',$idReserva)
         ->get();
 
-        $grupos = \DB::table('solicitud_reserva')
-        ->join('usuario_solicitud','Id_SR','=','solicitud_reserva_Id_SR')
-        ->join('users','Codigo_SIS_U','=','usuarios_Codigo_SIS_U')
-        ->join('materia','materia_Codigo_M','=','Codigo_M')
-        ->select('Id_G_US','Codigo_M','Nombre_M','Nombre_U','Apellido_Paterno_U','Apellido_Materno_U','Codigo_SIS_U')
-        ->where('Id_SR','=',$idReserva)
-        ->get();
-  
         $aulas = \DB::table('reporte_reserva') 
         ->join('reporte_reserva_aula','reporte_reserva_Id_RR','=','Id_RR')
         ->join('aula','Id_A','=','aula_Id_A')
@@ -111,7 +104,6 @@ class solicitudController extends Controller
         ->get();
 
         $respuesta['detalle']=$detalle;
-        $respuesta['grupos']=$grupos;
         $respuesta['aulas']=$aulas;
 
         return $respuesta;
