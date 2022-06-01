@@ -14,8 +14,8 @@ class SugerenciaAulasController extends Controller
        
        
         $aulas = \DB::table('aula')
-        ->join('horario_libre','aula_Id_A','=','Id_A')
-        ->where('dia_HL','=',$dia)
+        // ->join('horario_libre','aula_Id_A','=','Id_A')
+        // ->where('dia_HL','=',$dia)
         ->get();
        
         
@@ -89,7 +89,7 @@ class SugerenciaAulasController extends Controller
         ->join('usuario_solicitud','reporte_reserva.solicitud_reserva_Id_SR','=','usuario_solicitud.solicitud_reserva_Id_SR')
          ->join('materia', 'materia_Codigo_M','=','materia.Codigo_M')
     
-       ->select('Id_SR','Nombre_M', 'Id_G_US','Fecha_SR','Hora_Inicio_SR','Hora_Final_SR', 'usuarios_Codigo_SIS_U')
+       ->select('Id_SR','Nombre_M', 'Id_G_US','Fecha_SR','Hora_Inicio_SR','Hora_Final_SR', 'usuarios_Codigo_SIS_U', 'Fecha_Reporte_RR')
          ->where('usuarios_Codigo_SIS_U','=',$codSIS)
          ->where('Estado_RR','=',0)
         ->orderBy('Fecha_SR','ASC')
