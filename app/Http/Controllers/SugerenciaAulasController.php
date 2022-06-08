@@ -14,8 +14,8 @@ class SugerenciaAulasController extends Controller
        
        
         $aulas = \DB::table('aula')
-     ->join('horario_libre','aula_Id_A','=','Id_A')
-         ->where('dia_HL','=',$dia)
+        ->join('horario_libre','aula_Id_A','=','Id_A')
+        ->where('dia_HL','=',$dia)
         ->get();
        
         
