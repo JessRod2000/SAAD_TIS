@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\Model;
  * 
  * @property SolicitudReserva $solicitud_reserva
  * @property User $user
+ * @property Collection|Notificacion[] $notificacions
  * @property Collection|Aula[] $aulas
  *
  * @package App\Models
@@ -57,6 +58,11 @@ class ReporteReserva extends Model
 	public function user()
 	{
 		return $this->belongsTo(User::class, 'usuario_Codigo_SIS_U');
+	}
+
+	public function notificacions()
+	{
+		return $this->hasMany(Notificacion::class, 'reporte_reserva_Id_RR');
 	}
 
 	public function aulas()

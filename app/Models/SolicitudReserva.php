@@ -23,8 +23,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $Motivo_SR
  * @property Carbon $Hora_Final_SR
  * @property Carbon $Creado_en_SR
+ * @property int $periodo_academico_Id_PA1
  * 
  * @property Materium $materium
+ * @property PeriodoAcademico $periodo_academico
  * @property Collection|ReporteReserva[] $reporte_reservas
  * @property Collection|UsuarioSolicitud[] $usuario_solicituds
  *
@@ -40,7 +42,8 @@ class SolicitudReserva extends Model
 		'materia_Codigo_M' => 'int',
 		'Cantidad_Periodos_SR' => 'int',
 		'Numero_Estudiantes_SR' => 'int',
-		'Estado_Atendido_SR' => 'int'
+		'Estado_Atendido_SR' => 'int',
+		'periodo_academico_Id_PA1' => 'int'
 	];
 
 	protected $dates = [
@@ -59,12 +62,18 @@ class SolicitudReserva extends Model
 		'Estado_Atendido_SR',
 		'Motivo_SR',
 		'Hora_Final_SR',
-		'Creado_en_SR'
+		'Creado_en_SR',
+		'periodo_academico_Id_PA1'
 	];
 
 	public function materium()
 	{
 		return $this->belongsTo(Materium::class, 'materia_Codigo_M');
+	}
+
+	public function periodo_academico()
+	{
+		return $this->belongsTo(PeriodoAcademico::class, 'periodo_academico_Id_PA1');
 	}
 
 	public function reporte_reservas()
