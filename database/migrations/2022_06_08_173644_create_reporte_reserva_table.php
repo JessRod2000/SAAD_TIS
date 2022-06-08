@@ -19,7 +19,7 @@ class CreateReporteReservaTable extends Migration
             $table->string('Observacion_RR', 500);
             $table->date('Fecha_Reporte_RR');
             $table->integer('solicitud_reserva_Id_SR')->index('fk_reporte_reserva_solicitud_reserva1_idx');
-            $table->integer('usuario_Codigo_SIS_U')->index('fk_reporte_reserva_usuario1_idx');
+            $table->integer('usuarios_Codigo_SIS_U')->index('fk_reporte_reserva_usuario1_idx');
         });
     }
 

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\listarMateriaController;
 use App\Http\Controllers\solicitudController;
 use App\Http\Controllers\docenteController;
+use App\Http\Controllers\administradorController;
 use App\Http\Controllers\AutenticarController;
 use App\Http\Controllers\SugerenciaAulasController;
 use App\Http\Controllers\reporteController;
@@ -58,7 +59,14 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::patch('/desasignar/{codSIS}/{sisMateria}/{grupo}',[docenteController::class,'desasignar']);
     //Route::get('/existe/{codSIS}/{contrasenia}',[docenteController::class,'existe']);
     Route::get('/listarDocente',[docenteController::class,'listarDocentes']);
+    Route::get('/listarAdministrador',[administradorController::class,'listarAdministradores']);
+    Route::patch('/editarUsuario',[administradorController::class,'editarUsuario']);
+    Route::post('/establecerPeriodoAcademico',[administradorController::class,'establecerPeriodoAcademico']);
+
+
     Route::get('/obtenerDocente/{codSIS}',[docenteController::class,'obtenerDocente']);
+    Route::get('/obtenerUsuario/{codSIS}',[administradorController::class,'obtenerUsuario']);
+    
 
     Route::get('/listarHorariosAulas/{dia}',[SugerenciaAulasController::class,'listarHorariosAulas']);
     Route::get('/reservasAceptadas/{fecha}',[SugerenciaAulasController::class,'reservasAceptadas']);

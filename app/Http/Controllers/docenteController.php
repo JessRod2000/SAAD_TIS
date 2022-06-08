@@ -12,8 +12,8 @@ class docenteController extends Controller
 {
     public function listarDocentes(){
         $docentes = \DB::table('users')
-        ->select('Codigo_SIS_U','Nombre_U','Apellido_Paterno_U','Apellido_Materno_U','Correo_U')
-        ->where('Rol_U','=',1)
+        ->select('Codigo_SIS_U','Nombre_U','Apellido_Paterno_U','Apellido_Materno_U','Correo_U','Rol_U')
+        ->where('Rol_U','<>',2)
         ->get();
 
         return $docentes;

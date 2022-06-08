@@ -92,7 +92,8 @@ class solicitudController extends Controller
         $detalle = \DB::table('solicitud_reserva')
         ->join('materia','materia_Codigo_M','=','Codigo_M')
         ->join('reporte_reserva','solicitud_reserva_Id_SR','=','Id_SR')
-        ->select('Id_RR','Estado_RR','Observacion_RR','Fecha_Reporte_RR','usuario_Codigo_SIS_U')
+        ->join('users','Codigo_SIS_U','=','usuarios_Codigo_SIS_U')
+        ->select('Id_RR','Estado_RR','Observacion_RR','Fecha_Reporte_RR','usuarios_Codigo_SIS_U','Nombre_U','Apellido_Paterno_U','Apellido_Materno_U','Correo_U')
         ->where('Id_SR','=',$idReserva)
         ->get();
 

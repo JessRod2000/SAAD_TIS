@@ -24,6 +24,7 @@ class CreateSolicitudReservaTable extends Migration
             $table->string('Motivo_SR', 200);
             $table->time('Hora_Final_SR');
             $table->timestamp('Creado_en_SR')->useCurrentOnUpdate()->useCurrent();
+            $table->integer('periodo_academico_Id_PA1')->index('fk_solicitud_reserva_periodo_academico1_idx');
         });
     }
 
