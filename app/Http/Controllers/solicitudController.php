@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\administradorController;
 use Illuminate\Http\Request;
 use App\Models\SolicitudReserva;
 use App\Models\UsuarioSolicitud;
@@ -127,7 +128,22 @@ class solicitudController extends Controller
         ->update(['Estado_RRA'=>2]);
     }
 
+    public function obtenerPeriodoAcademico(){
+        $periodo = \DB::table('periodo_academico')
+        ->select('Id_PA')
+        ->orderBy('Id_PA','DESC')
+        ->first();
+
+        return $periodo;
+    }
+
+
     public function reservaCompartida(Request $request){
+        $periodo = \DB::table('periodo_academico')
+        ->select('Id_PA')
+        ->orderBy('Id_PA','DESC')
+        ->first();
+
         $reserva = new SolicitudReserva();
         
         $docentes = $request->docentes;
@@ -144,6 +160,7 @@ class solicitudController extends Controller
         $reserva->Motivo_SR = $request-> Motivo_SR;
         $reserva->Hora_Final_SR = $request-> Hora_Final_SR;
         $reserva->Creado_en_SR = now();
+        $reserva->periodo_academico_Id_PA = $periodo->Id_PA;
 
         $reserva->save();
 

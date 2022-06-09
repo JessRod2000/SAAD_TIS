@@ -15,7 +15,7 @@ class CreatePeriodoAcademicoTable extends Migration
     {
         Schema::create('periodo_academico', function (Blueprint $table) {
             $table->integer('Id_PA', true);
-            $table->string('Semestre_PA', 15);
+            $table->string('Semestre_PA', 25);
             $table->date('Fecha_Inicio_PA');
             $table->date('Fecha_Fin_PA');
         });

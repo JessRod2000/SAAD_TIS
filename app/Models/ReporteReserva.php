@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $Observacion_RR
  * @property Carbon $Fecha_Reporte_RR
  * @property int $solicitud_reserva_Id_SR
- * @property int $usuario_Codigo_SIS_U
+ * @property int $usuarios_Codigo_SIS_U
  * 
  * @property SolicitudReserva $solicitud_reserva
  * @property User $user
@@ -35,7 +35,7 @@ class ReporteReserva extends Model
 
 	protected $casts = [
 		'solicitud_reserva_Id_SR' => 'int',
-		'usuario_Codigo_SIS_U' => 'int'
+		'usuarios_Codigo_SIS_U' => 'int'
 	];
 
 	protected $dates = [
@@ -47,7 +47,7 @@ class ReporteReserva extends Model
 		'Observacion_RR',
 		'Fecha_Reporte_RR',
 		'solicitud_reserva_Id_SR',
-		'usuario_Codigo_SIS_U'
+		'usuarios_Codigo_SIS_U'
 	];
 
 	public function solicitud_reserva()
@@ -57,7 +57,7 @@ class ReporteReserva extends Model
 
 	public function user()
 	{
-		return $this->belongsTo(User::class, 'usuario_Codigo_SIS_U');
+		return $this->belongsTo(User::class, 'usuarios_Codigo_SIS_U');
 	}
 
 	public function notificacions()

@@ -41,6 +41,6 @@ class PeriodoAcademico extends Model
 
 	public function solicitud_reservas()
 	{
-		return $this->hasMany(SolicitudReserva::class, 'periodo_academico_Id_PA1');
+		return $this->hasMany(SolicitudReserva::class, 'periodo_academico_Id_PA');
 	}
 }
