@@ -46,8 +46,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::get('/detalleReserva/{idReserva}',[solicitudController::class,'detalleReserva']);
     Route::get('/detalleReservaAtendida/{idReserva}',[solicitudController::class,'detalleReservaAtendida']);
 
-    Route::post('/aceptarSolicitud',[reporteController::class,'aceptarSolicitud']);
-    Route::post('/rechazarSolicitud',[reporteController::class,'rechazarSolicitud']);
+   
 //para borrar---------------------
     Route::get('/index',[docenteController::class,'index']);
 //--------------------------------
@@ -78,4 +77,14 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::get('/listarAtendidas',[SugerenciaAulasController::class,'listarAtendidas']);
     Route::get('/listarRechazadasDoc/{codigoSIS}',[SugerenciaAulasController::class,'listarRechazadasDoc']);
     Route::get('/listarAulasEdificios/{edificio}',[SugerenciaAulasController::class,'listarAulasEdificios']);
+
+
+
+    Route::post('/aceptarSolicitud',[reporteController::class,'aceptarSolicitud']);
+    Route::post('/rechazarSolicitud',[reporteController::class,'rechazarSolicitud']);
+
+    Route::get('/notificacionesDocNuevas/{idDocente}',[reporteController::class,'notificacionesDocNuevas']);
+    Route::get('/notificacionesDocViejas/{idDocente}',[reporteController::class,'notificacionesDocViejas']);
+   
+    Route::post('/verNotificaciones',[reporteController::class,'verNotificaciones']);
 });
