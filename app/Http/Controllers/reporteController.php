@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\ReporteReserva;
+use App\Models\Notificacion;
 use App\Models\ReporteReservaAula;
 
 class reporteController extends Controller
@@ -36,6 +37,22 @@ class reporteController extends Controller
             $aulaReporte->save();
         }
 
+
+        $docentesdatos = \DB::table('usuario_solicitud')
+        ->select('usuarios_Codigo_SIS_U')
+        ->where('solicitud_reserva_Id_SR','=',$request->idReserva)
+        ->get();
+
+        foreach( $docentesdatos as $docente){
+            $nuevanotificacion = new Notificacion();
+
+            $nuevanotificacion->Estado_N = 0;
+            $nuevanotificacion->usuario_Codigo_SIS_U = $docente->usuarios_Codigo_SIS_U;
+            $nuevanotificacion->reporte_reserva_Id_RR = $aceptar->Id_RR;
+            $nuevanotificacion->save();
+        
+        }
+
         $reserva = \DB::table('solicitud_reserva')
         ->where('Id_SR','=',$request->idReserva)
         ->update(['Estado_Atendido_SR'=>1]);
@@ -55,10 +72,75 @@ class reporteController extends Controller
         $rechazar->solicitud_reserva_Id_SR = $request->idReserva;
         $rechazar->usuario_Codigo_SIS_U = $request->codSIS;
 
+   
+
         $rechazar->save();
+
+
+       
+        $docentesdatos = \DB::table('usuario_solicitud')
+        ->select('usuarios_Codigo_SIS_U')
+        ->where('solicitud_reserva_Id_SR','=',$request->idReserva)
+        ->get();
+
+        foreach( $docentesdatos as $docente){
+            $nuevanotificacion = new Notificacion();
+
+            $nuevanotificacion->Estado_N = 0;
+            $nuevanotificacion->usuario_Codigo_SIS_U = $docente->usuarios_Codigo_SIS_U;
+            $nuevanotificacion->reporte_reserva_Id_RR = $rechazar->Id_RR;
+            $nuevanotificacion->save();
+        
+        }
+      
+        
+        
+            
+      
 
         $reserva = \DB::table('solicitud_reserva')
         ->where('Id_SR','=',$request->idReserva)
         ->update(['Estado_Atendido_SR'=>1]);
+
+        $response['solicitud_rechazar']=$rechazar;
+        
+        return $rechazar;
+
     }
+
+    public function verNotificaciones (Request $request){
+        //modificar todas las notificaciones de un docente iddocente, con estado igual a visto
+        $notificaciones = \DB::table('notificacion')
+        ->where('usuario_Codigo_SIS_U','=',$request->idDocente)
+        ->update(['Estado_N'=>1]);
+    }
+
+    public function notificacionesDocNuevas($idDocente){
+        //dar las notificaciones del docente no vistas//
+        $notificaciones = \DB::table('notificacion')
+        ->join('reporte_reserva','reporte_reserva_Id_RR','=','reporte_reserva.Id_RR')
+        ->join('solicitud_reserva','solicitud_reserva_Id_SR','=','Id_SR')
+        ->join('materia', 'materia_Codigo_M','=','Codigo_M')
+        ->join('users', 'reporte_reserva.usuario_Codigo_SIS_U','=','users.Codigo_SIS_U')
+        ->select('Fecha_Reporte_RR', 'solicitud_reserva_Id_SR', 'Estado_RR','Observacion_RR', 'Nombre_M', 'Nombre_U','Apellido_Paterno_U','Apellido_Materno_U')
+        ->where('notificacion.usuario_Codigo_SIS_U','=',$idDocente)
+        ->where('Estado_N','=',0)
+        ->get();
+        return $notificaciones;
+
+    }
+    public function notificacionesDocViejas($idDocente){
+        $notificaciones = \DB::table('notificacion')
+        ->join('reporte_reserva','reporte_reserva_Id_RR','=','reporte_reserva.Id_RR')
+        ->join('solicitud_reserva','solicitud_reserva_Id_SR','=','Id_SR')
+        ->join('materia', 'materia_Codigo_M','=','Codigo_M')
+        ->join('users', 'reporte_reserva.usuario_Codigo_SIS_U','=','users.Codigo_SIS_U')
+        ->select('Fecha_Reporte_RR', 'solicitud_reserva_Id_SR', 'Estado_RR','Observacion_RR', 'Nombre_M', 'Nombre_U','Apellido_Paterno_U','Apellido_Materno_U')
+        ->where('notificacion.usuario_Codigo_SIS_U','=',$idDocente)
+        ->where('Estado_N','=',1)
+        ->get();
+        return $notificaciones;
+    }
+
+
 }
