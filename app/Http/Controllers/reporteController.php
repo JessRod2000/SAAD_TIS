@@ -20,7 +20,7 @@ class reporteController extends Controller
         $aceptar->Observacion_RR = $request->observacion;
         $aceptar->Fecha_Reporte_RR = now();
         $aceptar->solicitud_reserva_Id_SR = $request->idReserva;
-        $aceptar->usuario_Codigo_SIS_U = $request->codSIS;
+        $aceptar->usuarios_Codigo_SIS_U = $request->codSIS;
 
         $aceptar->save();
 
@@ -70,9 +70,7 @@ class reporteController extends Controller
         $rechazar->Observacion_RR = $request->observacion;
         $rechazar->Fecha_Reporte_RR = now();
         $rechazar->solicitud_reserva_Id_SR = $request->idReserva;
-        $rechazar->usuario_Codigo_SIS_U = $request->codSIS;
-
-   
+        $rechazar->usuarios_Codigo_SIS_U = $request->codSIS;
 
         $rechazar->save();
 
@@ -93,11 +91,7 @@ class reporteController extends Controller
         
         }
       
-        
-        
-            
-      
-
+     
         $reserva = \DB::table('solicitud_reserva')
         ->where('Id_SR','=',$request->idReserva)
         ->update(['Estado_Atendido_SR'=>1]);
