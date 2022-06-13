@@ -134,6 +134,8 @@ class reporteController extends Controller
         ->select('Fecha_Reporte_RR', 'solicitud_reserva_Id_SR', 'Estado_RR','Observacion_RR', 'Nombre_M', 'Nombre_U','Apellido_Paterno_U','Apellido_Materno_U')
         ->where('notificacion.usuario_Codigo_SIS_U','=',$idDocente)
         ->where('Estado_N','=',1)
+        ->orderBy('Fecha_Reporte_RR','DESC')
+        ->take(5)
         ->get();
         return $notificaciones;
     }
