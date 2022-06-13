@@ -48,6 +48,14 @@ class SugerenciaAulasController extends Controller
     //Mostrar reservas de un docente, pendientes = 0
     
     public function listarPendientesDoc($codSIS){
+
+        $periodo = \DB::table('periodo_academico')
+        ->orderBy('Id_PA', 'DESC')
+        ->first();
+       
+        $from1 = $periodo->Fecha_Inicio_PA;
+        $from2 = $periodo->Fecha_Fin_PA;
+
         $reservas = \DB::table('solicitud_reserva')
          ->join('materia', 'materia_Codigo_M','=','materia.Codigo_M')
          ->join('usuario_solicitud','solicitud_reserva_Id_SR','=','Id_SR')
@@ -56,12 +64,11 @@ class SugerenciaAulasController extends Controller
          ->select('Id_SR','Nombre_M', 'Id_G_US','Creado_en_SR', 'Hora_Inicio_SR','Id_SR')
          ->where('Codigo_SIS_U','=',$codSIS)
           ->where('Estado_Atendido_SR','=',0)
-     
+        ->whereBetween('Creado_en_SR',[$from1, $from2])
         ->orderBy('Creado_en_SR','ASC')
         ->get();
         return $reservas;
     }
-
     //reservas aceptadas del docente
     //0= rechazado
     //1= aceptado
