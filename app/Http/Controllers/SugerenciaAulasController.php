@@ -76,7 +76,7 @@ class SugerenciaAulasController extends Controller
          ->join('materia', 'materia_Codigo_M','=','materia.Codigo_M')
     
        ->select('Id_SR','Nombre_M', 'Id_G_US','Fecha_SR','Hora_Inicio_SR','Hora_Final_SR', 'usuarios_Codigo_SIS_U')
-        ->where('usuarios_Codigo_SIS_U','=',$codSIS)
+        ->where('usuario_solicitud.usuarios_Codigo_SIS_U','=',$codSIS)
          ->where('Estado_RR','=',1)
         ->orderBy('Fecha_SR','ASC')
         ->get();
@@ -90,7 +90,7 @@ class SugerenciaAulasController extends Controller
          ->join('materia', 'materia_Codigo_M','=','materia.Codigo_M')
     
        ->select('Id_SR','Nombre_M', 'Id_G_US','Fecha_SR','Hora_Inicio_SR','Hora_Final_SR', 'usuarios_Codigo_SIS_U', 'Fecha_Reporte_RR')
-         ->where('usuarios_Codigo_SIS_U','=',$codSIS)
+         ->where('usuario_solicitud.usuarios_Codigo_SIS_U','=',$codSIS)
          ->where('Estado_RR','=',0)
         ->orderBy('Fecha_SR','ASC')
         ->get();

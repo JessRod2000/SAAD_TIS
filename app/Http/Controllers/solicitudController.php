@@ -130,7 +130,6 @@ class solicitudController extends Controller
 
     public function obtenerPeriodoAcademico(){
         $periodo = \DB::table('periodo_academico')
-        ->select('Id_PA')
         ->orderBy('Id_PA','DESC')
         ->first();
 
