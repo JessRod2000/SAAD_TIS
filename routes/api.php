@@ -62,7 +62,8 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::patch('/editarUsuario',[administradorController::class,'editarUsuario']);
     Route::post('/establecerPeriodoAcademico',[administradorController::class,'establecerPeriodoAcademico']);
     Route::get('/obtenerPeriodoAcademico',[solicitudController::class,'obtenerPeriodoAcademico']);
-
+    Route::patch('/editarPeriodoAcademico',[administradorController::class,'editarPeriodoAcademico']);
+    
     Route::get('/obtenerDocente/{codSIS}',[docenteController::class,'obtenerDocente']);
     Route::get('/obtenerUsuario/{codSIS}',[administradorController::class,'obtenerUsuario']);
     
