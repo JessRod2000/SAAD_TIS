@@ -35,8 +35,14 @@ class administradorController extends Controller
     }
 
     public function editarUsuario(request $request){
-        $reserva = \DB::table('users')
+        $usuario = \DB::table('users')
         ->where('Codigo_SIS_U','=',$request->Codigo_SIS_U)
         ->update(['Nombre_U'=>$request->Nombre_U,'Contrasenia_U'=>$request->Contrasenia_U,'Correo_U'=>$request->Correo_U,'Apellido_Paterno_U'=>$request->Apellido_Paterno_U,'Apellido_Materno_U'=>$request->Apellido_Materno_U,'Rol_U'=>$request->Rol_U]);
+    }
+
+    public function editarPeriodoAcademico(request $request){
+        $periodo = \DB::table('periodo_academico')
+        ->where('Id_PA','=',$request->Id_PA)
+        ->update(['Fecha_Inicio_PA'=>$request->Fecha_Inicio_PA,'Fecha_Fin_PA'=>$request->Fecha_Fin_PA]);
     }
 }
