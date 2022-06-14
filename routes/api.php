@@ -72,10 +72,11 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     
     Route::get('/listarPendientesDoc/{codigoSIS}',[SugerenciaAulasController::class,'listarPendientesDoc']);
     Route::get('/listarAceptadasDoc/{codigoSIS}',[SugerenciaAulasController::class,'listarAceptadasDoc']);
+    Route::get('/listarRechazadasDoc/{codigoSIS}',[SugerenciaAulasController::class,'listarRechazadasDoc']);
     
    
     Route::get('/listarAtendidas',[SugerenciaAulasController::class,'listarAtendidas']);
-    Route::get('/listarRechazadasDoc/{codigoSIS}',[SugerenciaAulasController::class,'listarRechazadasDoc']);
+ 
     Route::get('/listarAulasEdificios/{edificio}',[SugerenciaAulasController::class,'listarAulasEdificios']);
 
 
@@ -88,3 +89,4 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
    
     Route::post('/verNotificaciones',[reporteController::class,'verNotificaciones']);
 });
+ 
