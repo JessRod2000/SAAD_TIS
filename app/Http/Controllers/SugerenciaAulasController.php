@@ -77,6 +77,13 @@ class SugerenciaAulasController extends Controller
   
     public function listarAceptadasDoc($codSIS)
     {
+        $periodo = \DB::table('periodo_academico')
+        ->orderBy('Id_PA', 'DESC')
+        ->first();
+       
+        $from1 = $periodo->Fecha_Inicio_PA;
+        $from2 = $periodo->Fecha_Fin_PA;
+
         $reservas = \DB::table('reporte_reserva')
         ->join('solicitud_reserva','reporte_reserva.solicitud_reserva_Id_SR','=','solicitud_reserva.Id_SR')
         ->join('usuario_solicitud','reporte_reserva.solicitud_reserva_Id_SR','=','usuario_solicitud.solicitud_reserva_Id_SR')
@@ -85,12 +92,20 @@ class SugerenciaAulasController extends Controller
        ->select('Id_SR','Nombre_M', 'Id_G_US','Fecha_SR','Hora_Inicio_SR','Hora_Final_SR')
         ->where('usuario_solicitud.usuarios_Codigo_SIS_U','=',$codSIS)
          ->where('Estado_RR','=',1)
+         ->whereBetween('Fecha_SR',[$from1, $from2])
         ->orderBy('Fecha_SR','ASC')
         ->get();
         return $reservas;
     }
     public function listarRechazadasDoc($codSIS)
     {
+        $periodo = \DB::table('periodo_academico')
+        ->orderBy('Id_PA', 'DESC')
+        ->first();
+       
+        $from1 = $periodo->Fecha_Inicio_PA;
+        $from2 = $periodo->Fecha_Fin_PA;
+
         $reservas = \DB::table('reporte_reserva')
         ->join('solicitud_reserva','reporte_reserva.solicitud_reserva_Id_SR','=','solicitud_reserva.Id_SR')
         ->join('usuario_solicitud','reporte_reserva.solicitud_reserva_Id_SR','=','usuario_solicitud.solicitud_reserva_Id_SR')
@@ -99,18 +114,28 @@ class SugerenciaAulasController extends Controller
        ->select('Id_SR','Nombre_M', 'Id_G_US','Fecha_SR','Hora_Inicio_SR','Hora_Final_SR', 'Fecha_Reporte_RR')
          ->where('usuario_solicitud.usuarios_Codigo_SIS_U','=',$codSIS)
          ->where('Estado_RR','=',0)
+         ->whereBetween('Fecha_SR',[$from1, $from2])
         ->orderBy('Fecha_SR','ASC')
         ->get();
         return $reservas;
     }
 
     public function listarAtendidas(){
+
+        $periodo = \DB::table('periodo_academico')
+        ->orderBy('Id_PA', 'DESC')
+        ->first();
+       
+        $from1 = $periodo->Fecha_Inicio_PA;
+        $from2 = $periodo->Fecha_Fin_PA;
+
         $reservas = \DB::table('solicitud_reserva')
          ->join('usuario_solicitud','Id_SR','=','solicitud_reserva_Id_SR')
          ->join('users','Codigo_SIS_U','=','usuarios_Codigo_SIS_U')
          ->join('materia','materia_Codigo_M','=','Codigo_M')
          ->select('Creado_en_SR','Id_SR','Nombre_M','Nombre_U','Apellido_Paterno_U','Apellido_Materno_U','Fecha_SR','Hora_Inicio_SR','Id_G_US')
          ->where('Estado_Atendido_SR','=',1) 
+         ->whereBetween('Fecha_SR',[$from1, $from2])
          ->orderBy('Fecha_SR','ASC')
          ->get();
 
