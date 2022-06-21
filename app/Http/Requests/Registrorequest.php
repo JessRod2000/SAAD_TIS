@@ -31,7 +31,7 @@ class Registrorequest extends FormRequest
             'Correo_U'=> 'required',
             'Apellido_Paterno_U'=> 'required',
             'Apellido_Materno_U'=> 'required',
-            'Rol_U'=> 'required'
+           
         ];
     }
 }

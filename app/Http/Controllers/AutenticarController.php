@@ -19,7 +19,7 @@ class AutenticarController extends Controller
         $user = new User();
         $user->Codigo_SIS_U= $request->Codigo_SIS_U;
         $user->Nombre_U= $request->Nombre_U;
-        $user->Contrasenia_U= $request->Contrasenia_U;
+        $user->Contrasenia_U= Hash::make($request->Contrasenia_U);
         $user->Correo_U= $request->Correo_U;
         $user->Apellido_Paterno_U= $request->Apellido_Paterno_U;
         $user->Apellido_Materno_U= $request->Apellido_Materno_U;
@@ -44,14 +44,29 @@ class AutenticarController extends Controller
         ],200);
     }
     public function acceso(AccesoRequest $request){
+
         $user = User::where('Correo_U', $request->Correo_U)->first();
-        $user2 = User::where('Contrasenia_U', $request->Contrasenia_U)->first();
-        if (! $user || ! $user2) {
+
+        if (! $user || ! Hash::check($request->Contrasenia_U, $user->Contrasenia_U)) {
             throw ValidationException::withMessages([
-                'msg' => ['El usuario no existe o es incorrecto'],
+                'email' => ['El usuario no existe o es incorrecto'],
             ]);
         }
-    
+
+        // $user2 = User::where('Contrasenia_U', $request->Contrasenia_U)->first();
+        // if (! $user || ! $user2) {
+        //     throw ValidationException::withMessages([
+        //         'msg' => ['El usuario no existe o es incorrecto'],
+        //     ]);
+        // }
+        
+        $roles = \DB::table('rol_usuario')
+        ->join('funcion_rol','rol_usuario.Rol_Id_R','=','funcion_rol.Rol_Id_R')
+        ->join('funcion','Funcion_Id_F','=','funcion.Id_F')
+        ->select('rol_usuario.Rol_Id_R', 'Id_F', 'Nombre_F')
+        ->where('rol_usuario_Codigo_SIS_U','=',$user->Codigo_SIS_U)
+        ->get();
+        
         $token =  $user->createToken($request->Correo_U)->plainTextToken;
         return response()->json([
             'res' => true,
@@ -60,8 +75,9 @@ class AutenticarController extends Controller
             'codigosis' => $user->Codigo_SIS_U,
             'apellido_paterno' => $user->Apellido_Paterno_U,
             'apellido_materno' => $user->Apellido_Materno_U,
-            'rol'=>$user->Rol_U,
-            'token'=> $token
+            'token'=> $token,
+            'rol'=>$roles
+            
         ],200);
     }
 

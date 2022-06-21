@@ -126,6 +126,7 @@ class SugerenciaAulasController extends Controller
        
         $from1 = $periodo->Fecha_Inicio_PA;
         $from2 = $periodo->Fecha_Fin_PA;
+        
         $reservas = \DB::table('solicitud_reserva')
          ->join('usuario_solicitud','Id_SR','=','solicitud_reserva_Id_SR')
          ->join('users','Codigo_SIS_U','=','usuarios_Codigo_SIS_U')
