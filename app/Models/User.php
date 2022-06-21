@@ -23,9 +23,10 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string $Correo_U
  * @property string $Apellido_Paterno_U
  * @property string $Apellido_Materno_U
- * @property int $Rol_U
  * 
+ * @property Collection|Notificacion[] $notificacions
  * @property Collection|ReporteReserva[] $reporte_reservas
+ * @property RolUsuario $rol_usuario
  * @property Collection|UsuarioMaterium[] $usuario_materia
  * @property Collection|UsuarioSolicitud[] $usuario_solicituds
  *
@@ -40,8 +41,7 @@ class User extends Authenticatable
 	public $timestamps = false;
 
 	protected $casts = [
-		'Codigo_SIS_U' => 'int',
-		'Rol_U' => 'int'
+		'Codigo_SIS_U' => 'int'
 	];
 
 	protected $fillable = [
@@ -49,8 +49,7 @@ class User extends Authenticatable
 		'Contrasenia_U',
 		'Correo_U',
 		'Apellido_Paterno_U',
-		'Apellido_Materno_U',
-		'Rol_U'
+		'Apellido_Materno_U'
 	];
 
 	protected $hidden = [
@@ -58,9 +57,19 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+	public function notificacions()
+	{
+		return $this->hasMany(Notificacion::class, 'usuario_Codigo_SIS_U');
+	}
+
 	public function reporte_reservas()
 	{
-		return $this->hasMany(ReporteReserva::class, 'usuario_Codigo_SIS_U');
+		return $this->hasMany(ReporteReserva::class, 'usuarios_Codigo_SIS_U');
+	}
+
+	public function rol_usuario()
+	{
+		return $this->hasOne(RolUsuario::class, 'rol_usuario_Codigo_SIS_U');
 	}
 
 	public function usuario_materia()

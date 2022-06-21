@@ -14,8 +14,8 @@ class AddForeignKeysToUsuarioSolicitudTable extends Migration
     public function up()
     {
         Schema::table('usuario_solicitud', function (Blueprint $table) {
-            $table->foreign(['solicitud_reserva_Id_SR'], 'fk_usuario_solicitud_solicitud_reserva1')->references(['Id_SR'])->on('solicitud_reserva')->onUpdate('NO ACTION')->onDelete('NO ACTION');
             $table->foreign(['usuarios_Codigo_SIS_U'], 'fk_usuarios_has_solicitud_reserva_usuarios')->references(['Codigo_SIS_U'])->on('users')->onUpdate('NO ACTION')->onDelete('NO ACTION');
+            $table->foreign(['solicitud_reserva_Id_SR'], 'fk_usuario_solicitud_solicitud_reserva1')->references(['Id_SR'])->on('solicitud_reserva')->onUpdate('NO ACTION')->onDelete('NO ACTION');
         });
     }
 
@@ -27,8 +27,8 @@ class AddForeignKeysToUsuarioSolicitudTable extends Migration
     public function down()
     {
         Schema::table('usuario_solicitud', function (Blueprint $table) {
-            $table->dropForeign('fk_usuario_solicitud_solicitud_reserva1');
             $table->dropForeign('fk_usuarios_has_solicitud_reserva_usuarios');
+            $table->dropForeign('fk_usuario_solicitud_solicitud_reserva1');
         });
     }
 }

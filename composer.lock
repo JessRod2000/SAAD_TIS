@@ -6199,16 +6199,16 @@
         },
         {
             "name": "kitloong/laravel-migrations-generator",
-            "version": "v6.2.0",
+            "version": "v6.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kitloong/laravel-migrations-generator.git",
-                "reference": "db00d2dc59916f12bb2449b0b527fb3e05e58491"
+                "reference": "13589fd28e4c12faa298282bdeb692765fdf5ae1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kitloong/laravel-migrations-generator/zipball/db00d2dc59916f12bb2449b0b527fb3e05e58491",
-                "reference": "db00d2dc59916f12bb2449b0b527fb3e05e58491",
+                "url": "https://api.github.com/repos/kitloong/laravel-migrations-generator/zipball/13589fd28e4c12faa298282bdeb692765fdf5ae1",
+                "reference": "13589fd28e4c12faa298282bdeb692765fdf5ae1",
                 "shasum": ""
             },
             "require": {
@@ -6261,7 +6261,7 @@
             ],
             "support": {
                 "issues": "https://github.com/kitloong/laravel-migrations-generator/issues",
-                "source": "https://github.com/kitloong/laravel-migrations-generator/tree/v6.2.0"
+                "source": "https://github.com/kitloong/laravel-migrations-generator/tree/v6.2.1"
             },
             "funding": [
                 {
@@ -6269,7 +6269,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2022-05-29T07:27:45+00:00"
+            "time": "2022-06-19T15:26:27+00:00"
         },
         {
             "name": "laravel/sail",
