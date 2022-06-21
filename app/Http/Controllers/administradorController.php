@@ -37,7 +37,58 @@ class administradorController extends Controller
     public function editarUsuario(request $request){
         $usuario = \DB::table('users')
         ->where('Codigo_SIS_U','=',$request->Codigo_SIS_U)
-        ->update(['Nombre_U'=>$request->Nombre_U,'Contrasenia_U'=>$request->Contrasenia_U,'Correo_U'=>$request->Correo_U,'Apellido_Paterno_U'=>$request->Apellido_Paterno_U,'Apellido_Materno_U'=>$request->Apellido_Materno_U,'Rol_U'=>$request->Rol_U]);
+        ->update(['Nombre_U'=>$request->Nombre_U,'Contrasenia_U'=>$request->Contrasenia_U,'Correo_U'=>$request->Correo_U,'Apellido_Paterno_U'=>$request->Apellido_Paterno_U,'Apellido_Materno_U'=>$request->Apellido_Materno_U]);
+        
+        $roles = $request->rolesAsignado;
+        $longitud = sizeof($roles);
+
+        for($i =0; $i<$longitud; $i++){
+            try{
+                $desasignarRol = \DB::table('rol_usuario')
+                ->where('rol_usuario_Codigo_SIS_U','=',$request->Codigo_SIS_U)
+                ->where('Rol_Id_R','=',$roles[$i])
+                ->where('habilitado_R_U','=',1)
+                ->update(['habilitado_R_U'=>1]);
+            }catch(Exception $e){
+                $asignarRol = new RolUsuario();
+                $asignarRol->Rol_Id_R=$roles[$i];
+                $asignarRol->rol_usuario_Codigo_SIS_U=$request->Codigo_SIS_U;
+                $asignarRol->habilitado_R_U =1;
+                $asignarRol->fecha_inicio_R_U =now();
+                $asignarRol->save();
+            }
+        }
+        
+/*
+        $desasignarRol = \DB::table('rol_usuario')
+        ->where('rol_usuario_Codigo_SIS_U','=',$request->Codigo_SIS_U)
+        ->where('Rol_Id_R','=',$roles[$i])
+        ->where('habilitado_R_U','=',1)
+        ->update(['habilitado_R_U'=>0,'fecha_fin_R_U'=>now()]);
+        
+        $asignarRol = new RolUsuario();
+        $asignarRol->Rol_Id_R=$roles[$i];
+        $asignarRol->rol_usuario_Codigo_SIS_U=$request->Codigo_SIS_U;
+        $asignarRol->habilitado_R_U =1;
+        $asignarRol->fecha_inicio_R_U =now();
+        $asignarRol->save();*/
+    }
+
+    public function desasignarRoles(request $request){
+        $roles = $request->roles;
+        $longitud = sizeof($roles);
+
+        for($i =0; $i<$longitud; $i++){
+            try{
+                $desasignarRol = \DB::table('rol_usuario')
+                ->where('rol_usuario_Codigo_SIS_U','=',$request->Codigo_SIS_U)
+                ->where('Rol_Id_R','=',$roles[$i])
+                ->where('habilitado_R_U','=',1)
+                ->update(['habilitado_R_U'=>0,'fecha_fin_R_U'=>now()]);
+            }catch(Exception $e){
+
+            }
+        }
     }
 
     public function editarPeriodoAcademico(request $request){

@@ -20,7 +20,6 @@ class CreateUsersTable extends Migration
             $table->string('Correo_U', 50);
             $table->string('Apellido_Paterno_U', 15);
             $table->string('Apellido_Materno_U', 15);
-            $table->integer('Rol_U');
         });
     }
 

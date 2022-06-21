@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
+use App\Models\RolUsuario;
 use App\Http\Requests\Registrorequest;
 use App\Http\Requests\AccesoRequest;
 use Illuminate\Http\Request;
@@ -22,8 +23,20 @@ class AutenticarController extends Controller
         $user->Correo_U= $request->Correo_U;
         $user->Apellido_Paterno_U= $request->Apellido_Paterno_U;
         $user->Apellido_Materno_U= $request->Apellido_Materno_U;
-        $user->Rol_U= $request->Rol_U;
+        //$user->Rol_U= $request->Rol_U;
         $user->save();
+
+        $roles = $request->roles;
+        $longitud = sizeof($roles);
+
+        for($i =0; $i<$longitud; $i++){
+            $rol = new RolUsuario();
+            $rol->Rol_Id_R=$roles[$i];
+            $rol->rol_usuario_Codigo_SIS_U=$request->Codigo_SIS_U;
+            $rol->habilitado_R_U =1;
+            $rol->fecha_inicio_R_U =now();
+            $rol->save();
+        }
 
         return response()->json([
             'res'=>true,
