@@ -60,7 +60,6 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::get('/listarDocente',[docenteController::class,'listarDocentes']);
     Route::get('/listarAdministrador',[administradorController::class,'listarAdministradores']);
     Route::patch('/editarUsuario',[administradorController::class,'editarUsuario']);
-    Route::patch('/desasignarRoles',[administradorController::class,'desasignarRoles']);
 
     Route::post('/establecerPeriodoAcademico',[administradorController::class,'establecerPeriodoAcademico']);
     Route::get('/obtenerPeriodoAcademico',[solicitudController::class,'obtenerPeriodoAcademico']);
@@ -92,4 +91,3 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
    
     Route::post('/verNotificaciones',[reporteController::class,'verNotificaciones']);
 });
- 
