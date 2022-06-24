@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\RolUsuario;
+use App\Models\Rol;
 use App\Models\UsuarioMaterium;
 use App\Models\Grupo;
  
@@ -12,11 +14,19 @@ class docenteController extends Controller
 {
     public function listarDocentes(){
         $docentes = \DB::table('users')
-        ->select('Codigo_SIS_U','Nombre_U','Apellido_Paterno_U','Apellido_Materno_U','Correo_U','Rol_U')
-        ->where('Rol_U','<>',2)
+        ->join('rol_usuario','rol_usuario_Codigo_SIS_U','=','Codigo_SIS_U')
+        ->select('Codigo_SIS_U','Nombre_U','Apellido_Paterno_U','Apellido_Materno_U','Correo_U')
+        ->where('Rol_Id_R','=',1)
         ->get();
 
         return $docentes;
+    }
+
+    public function obtenerRoles(){
+        $roles = \DB::table('rol')
+        ->get();
+
+        return $roles;
     }
 
     public function index(){
