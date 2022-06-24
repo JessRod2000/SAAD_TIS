@@ -23,7 +23,15 @@ class administradorController extends Controller
         ->where('Codigo_SIS_U','=',$codSIS)
         ->get();
 
-        return $docente;
+        $roles = \DB::table('rol_usuario')
+        ->where('rol_usuario_Codigo_SIS_U','=',$codSIS)
+        ->where('habilitado_R_U','=',1)
+        ->get();
+
+        $response['usuario']=$docente;
+        $response['roles']=$roles;
+
+        return $response;
     }
 
     public function editarUsuario(request $request){
