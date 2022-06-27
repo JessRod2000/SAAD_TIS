@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\RolUsuario;
-
+  
+use Illuminate\Support\Facades\Hash;
 class administradorController extends Controller
 {
     public function listarAdministradores(){
