@@ -13,6 +13,7 @@ class administradorController extends Controller
         ->join('rol_usuario','rol_usuario_Codigo_SIS_U','=','Codigo_SIS_U')
         ->select('Codigo_SIS_U','Nombre_U','Apellido_Paterno_U','Apellido_Materno_U','Correo_U')
         ->where('Rol_Id_R','=',2)
+        ->where('habilitado_R_U','=',1)
         ->get();
 
         return $administradores;
