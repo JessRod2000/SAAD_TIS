@@ -88,5 +88,3 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
    
     Route::post('/verNotificaciones',[reporteController::class,'verNotificaciones']);
 });
-
-Route::get('/obtenerUsuario/{codSIS}',[administradorController::class,'obtenerUsuario']);
