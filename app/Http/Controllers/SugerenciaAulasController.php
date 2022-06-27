@@ -72,7 +72,7 @@ class SugerenciaAulasController extends Controller
         ->join('solicitud_reserva','reporte_reserva.solicitud_reserva_Id_SR','=','solicitud_reserva.Id_SR')
         ->join('usuario_solicitud','reporte_reserva.solicitud_reserva_Id_SR','=','usuario_solicitud.solicitud_reserva_Id_SR')
         ->join('materia', 'materia_Codigo_M','=','materia.Codigo_M')
-        ->select('Id_SR','Nombre_M', 'Id_G_US','Fecha_SR','Hora_Inicio_SR','Hora_Final_SR')
+        ->select('Id_RR','Id_SR','Nombre_M', 'Id_G_US','Fecha_SR','Hora_Inicio_SR','Hora_Final_SR')
         ->where('usuario_solicitud.usuarios_Codigo_SIS_U','=',$codSIS)
         ->where('Estado_RR','=',1)
         ->orderBy('Fecha_SR','ASC')
