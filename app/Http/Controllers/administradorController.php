@@ -43,7 +43,7 @@ class administradorController extends Controller
         }else{
             $usuario = \DB::table('users')
             ->where('Codigo_SIS_U','=',$request->Codigo_SIS_U)
-            ->update(['Nombre_U'=>$request->Nombre_U,'Contrasenia_U'=>$request->Contrasenia_U,'Correo_U'=>$request->Correo_U,'Apellido_Paterno_U'=>$request->Apellido_Paterno_U,'Apellido_Materno_U'=>$request->Apellido_Materno_U]);
+            ->update(['Nombre_U'=>$request->Nombre_U,'Contrasenia_U'=>Hash::make($request->Contrasenia_U),'Correo_U'=>$request->Correo_U,'Apellido_Paterno_U'=>$request->Apellido_Paterno_U,'Apellido_Materno_U'=>$request->Apellido_Materno_U]);
         }
         
         $anterior = $request->anterior;
